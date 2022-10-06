@@ -1,0 +1,14 @@
+{
+  "watch": [
+    "*/*.js"
+  ],
+  "ignore": [
+    "public",
+    "ecosystem.config.js",
+    "eslintrc.js",
+    "jest.config.js"
+  ],
+  "env": {
+    "IS_DEV": true
+  }
+}
