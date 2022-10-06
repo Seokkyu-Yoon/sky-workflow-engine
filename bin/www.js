@@ -3,6 +3,9 @@ import '../preload'
 import http from 'http'
 
 import { app } from '@/app'
+import { Logger } from '@/module/logger'
+
+const logger = Logger()
 
 function getPort () {
   const strPort = process.env.PORT
@@ -20,7 +23,7 @@ const server = http.createServer(app)
 function onListening () {
   const addr = server.address()
   const bind = typeof addr === 'string' ? `pipe ${addr}` : `http://localhost:${addr.port}`
-  console.log('listening on', bind)
+  logger.log('listening on', bind)
 }
 function onError (err) {
   if (err.syscall !== 'listen') throw err
@@ -28,10 +31,10 @@ function onError (err) {
 
   switch (err.code) {
     case 'EACCES':
-      console.error(`${bind} requires elevated privileges`)
+      logger.error(`${bind} requires elevated privileges`)
       break
     case 'EDDRINUSE':
-      console.error(`${bind} is already in use`)
+      logger.error(`${bind} is already in use`)
       break
     default:
       throw err
