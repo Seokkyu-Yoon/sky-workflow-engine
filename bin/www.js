@@ -23,7 +23,7 @@ const server = http.createServer(app)
 function onListening () {
   const addr = server.address()
   const bind = typeof addr === 'string' ? `pipe ${addr}` : `http://localhost:${addr.port}`
-  logger.log('listening on', bind)
+  logger.debug('listening on', bind)
 }
 function onError (err) {
   if (err.syscall !== 'listen') throw err
