@@ -44,13 +44,20 @@ const getCallInfo = () => {
   return [callPath, col, line].join(':')
 }
 
+const logTypes = ['debug', 'log', 'info', 'warn', 'error']
+const longestTypeLength = logTypes.reduce((length, logType) => Math.max(length, logType.length), 0)
+const formatType = type => type.toUpperCase().padEnd(longestTypeLength, ' ')
+
 export const Logger = () => {
-  const logTypes = ['debug', 'log', 'info', 'warn', 'error']
   return logTypes.reduce((logger, type) => {
+    const formattedType = formatType(type)
     logger[type] = (...data) => {
       const timeStamp = getTimeStamp()
       const line = getCallInfo()
-      const params = [`[${timeStamp}](${line})`, ...data]
+      const params = [
+        `${formattedType} [${timeStamp}](${line})\n`,
+        '●', ...data
+      ]
       loggerStd[type].apply(loggerStd, params)
       loggerFile[type].apply(loggerFile, params)
     }
