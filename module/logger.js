@@ -6,18 +6,24 @@ const loggerStd = new console.Console({
   stdout: process.stdout,
   stderr: process.stderr
 })
-const loggerFile = process.env.LOGGER_SAVE_AS_FILE
-  ? new console.Console({
-    stdout: fs.createWriteStream(process.env.LOGGER_STDOUT_PATH),
-    stderr: fs.createWriteStream(process.env.LOGGER_STDERR_PATH)
-  })
-  : {
-      debug: _noop,
-      log: _noop,
-      info: _noop,
-      warn: _noop,
-      error: _noop
-    }
+
+const loggerFile = (() => {
+  const c = process.env.LOGGER_SAVE_AS_FILE
+    ? new console.Console({
+      stdout: fs.createWriteStream(process.env.LOGGER_STDOUT_PATH),
+      stderr: fs.createWriteStream(process.env.LOGGER_STDERR_PATH)
+    })
+    : {
+        log: _noop,
+        info: _noop,
+        warn: _noop,
+        error: _noop
+      }
+
+  c.debug = _noop
+  return c
+})()
+
 const getTimeStamp = (objDate = new Date()) => {
   const years = String(objDate.getFullYear()).padStart(4, '0')
   const months = String(objDate.getMonth() + 1).padStart(2, '0')
@@ -54,10 +60,7 @@ export const Logger = () => {
     logger[type] = (...data) => {
       const timeStamp = getTimeStamp()
       const line = getCallInfo()
-      const params = [
-        `${formattedType} [${timeStamp}](${line})\n`,
-        '●', ...data
-      ]
+      const params = [`${formattedType} [${timeStamp}](${line})\n`, ...data]
       loggerStd[type].apply(loggerStd, params)
       loggerFile[type].apply(loggerFile, params)
     }
