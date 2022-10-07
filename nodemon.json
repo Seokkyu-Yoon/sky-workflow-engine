@@ -9,6 +9,6 @@
     "jest.config.js"
   ],
   "env": {
-    "IS_DEV": true
+    "PORT": 18830
   }
 }

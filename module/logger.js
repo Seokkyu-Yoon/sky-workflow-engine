@@ -55,14 +55,14 @@ const logTypes = ['debug', 'log', 'info', 'warn', 'error']
 const longestTypeLength = logTypes.reduce((length, logType) => Math.max(length, logType.length), 0)
 const formatType = type => type.toUpperCase().padEnd(longestTypeLength, ' ')
 
-export const logger = logTypes.reduce((l, type) => {
+export const logger = logTypes.reduce((log, type) => {
   const formattedType = formatType(type)
-  l[type] = (...data) => {
+  log[type] = (...data) => {
     const timeStamp = getTimeStamp()
     const line = getCallInfo()
     const params = [`${formattedType} [${timeStamp}](${line})\n`, ...data]
     loggerStd[type].apply(loggerStd, params)
     loggerFile[type].apply(loggerFile, params)
   }
-  return l
+  return log
 }, {})

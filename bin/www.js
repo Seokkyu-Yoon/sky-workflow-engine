@@ -3,11 +3,9 @@ import '../preload'
 import http from 'http'
 
 import { app } from '@/app'
-import { Logger } from '@/module/logger'
+import { logger } from '@/module'
 
-const logger = Logger()
-
-function getPort () {
+const getPort = () => {
   const strPort = process.env.PORT
   const numPort = parseInt(strPort, 10)
   if (isNaN(numPort)) return strPort
@@ -20,12 +18,12 @@ app.set('port', port)
 
 const server = http.createServer(app)
 
-function onListening () {
+const onListening = () => {
   const addr = server.address()
   const bind = typeof addr === 'string' ? `pipe ${addr}` : `http://localhost:${addr.port}`
   logger.debug('listening on', bind)
 }
-function onError (err) {
+const onError = (err) => {
   if (err.syscall !== 'listen') throw err
   const bind = `${typeof port === 'string' ? 'Pipe' : 'Port'} ${port}`
 
@@ -44,5 +42,4 @@ function onError (err) {
 
 server.on('listening', onListening)
 server.on('error', onError)
-
 server.listen(port)
