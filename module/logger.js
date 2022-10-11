@@ -2,10 +2,6 @@ import path from 'node:path'
 import fs from 'node:fs'
 
 const _noop = () => {}
-const loggerStd = new console.Console({
-  stdout: process.stdout,
-  stderr: process.stderr
-})
 
 const getTimeStamp = (objDate = new Date()) => {
   const years = String(objDate.getFullYear()).padStart(4, '0')
@@ -18,27 +14,9 @@ const getTimeStamp = (objDate = new Date()) => {
   return `${years}-${months}-${dates}T${hours}:${minutes}:${seconds}.${milliseconds}Z`
 }
 
-const loggerFile = (() => {
-  const timeStamp = getTimeStamp()
-  const c = process.env.LOGGER_SAVE_AS_FILE
-    ? new console.Console({
-      stdout: fs.createWriteStream(path.resolve(process.env.LOGGER_DIR, `${timeStamp}_log.log`)),
-      stderr: fs.createWriteStream(path.resolve(process.env.LOGGER_DIR, `${timeStamp}_error.log`))
-    })
-    : {
-        log: _noop,
-        info: _noop,
-        warn: _noop,
-        error: _noop
-      }
-
-  c.debug = _noop
-  return c
-})()
-
 const getCallInfo = () => {
   const errForStack = new Error('logline')
-  const [,,, stackText = null] = errForStack.stack.split('\n')
+  const [,,,, stackText = null] = errForStack.stack.split('\n')
   if (stackText === null) return 'can\'t trace'
 
   const [, callInfo = null] = stackText.match(/\(([^)]+)\)/) || []
@@ -51,18 +29,71 @@ const getCallInfo = () => {
   return [callPath, line, col].join(':')
 }
 
-const logTypes = ['debug', 'log', 'info', 'warn', 'error']
-const longestTypeLength = logTypes.reduce((length, logType) => Math.max(length, logType.length), 0)
-const formatType = type => type.toUpperCase().padEnd(longestTypeLength, ' ')
+const getPreData = () => {
+  const timeStamp = getTimeStamp()
+  const callInfo = getCallInfo()
+  return `[${timeStamp}](${callInfo})\n`
+}
 
-export const logger = logTypes.reduce((log, type) => {
-  const formattedType = formatType(type)
-  log[type] = (...data) => {
+const LoggerNoop = () => ({
+  debug: _noop,
+  log: _noop,
+  info: _noop,
+  warn: _noop,
+  error: _noop
+})
+const LoggerStd = () => new console.Console({
+  stdout: process.stdout,
+  stderr: process.stderr
+})
+const LoggerFile = () => {
+  if (process.env.LOGGER_SAVE_AS_FILE) {
     const timeStamp = getTimeStamp()
-    const line = getCallInfo()
-    const params = [`${formattedType} [${timeStamp}](${line})\n`, ...data]
-    loggerStd[type].apply(loggerStd, params)
-    loggerFile[type].apply(loggerFile, params)
+    const logger = new console.Console({
+      stdout: fs.createWriteStream(path.resolve(process.env.LOGGER_DIR, `${timeStamp}_log.log`)),
+      stderr: fs.createWriteStream(path.resolve(process.env.LOGGER_DIR, `${timeStamp}_error.log`))
+    })
+    logger.debug = _noop
+    return logger
   }
-  return log
-}, {})
+  return LoggerNoop()
+}
+const Logger = () => {
+  const loggerStd = LoggerStd()
+  const loggerFile = LoggerFile()
+
+  return {
+    debug: (...data) => {
+      const logType = 'DEBUG'
+      const params = getPreData()
+      loggerStd.debug(logType, params, ...data)
+      loggerFile.debug(logType, params, ...data)
+    },
+    log: (...data) => {
+      const logType = 'LOG'
+      const params = getPreData()
+      loggerStd.log(logType, params, ...data)
+      loggerFile.log(logType, params, ...data)
+    },
+    info: (...data) => {
+      const logType = 'INFO'
+      const params = getPreData()
+      loggerStd.info(logType, params, ...data)
+      loggerFile.info(logType, params, ...data)
+    },
+    warn: (...data) => {
+      const logType = 'WARN'
+      const params = getPreData()
+      loggerStd.warn(logType, params, ...data)
+      loggerFile.warn(logType, params, ...data)
+    },
+    error: (...data) => {
+      const logType = 'ERROR'
+      const params = getPreData()
+      loggerStd.error(logType, params, ...data)
+      loggerFile.error(logType, params, ...data)
+    }
+  }
+}
+
+export const logger = Logger()
