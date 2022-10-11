@@ -1,10 +1,17 @@
 import { logger } from '@/module'
 
-const getSeconds = (startAt = new Date()) => ((new Date().getTime() - startAt.getTime()) / 1000).toFixed(3)
-const onFinish = (method, url, statusCode, seconds) => logger.info(method, url, statusCode, `${seconds}s`)
+const delayedSecondsFrom = (startAt = new Date()) => ((new Date().getTime() - startAt.getTime()) / 1000).toFixed(3)
 
-export const Logger = (req, res, next) => {
-  const startAt = new Date()
-  res.on('finish', () => onFinish(req.method, req.url, res.statusCode, getSeconds(startAt)))
-  next()
+export const Logger = () => {
+  return (req, res, next) => {
+    const startAt = new Date()
+    res.on('finish', () => {
+      const method = req?.method
+      const url = req?.url
+      const statusCode = res?.statusCode
+      const seconds = delayedSecondsFrom(startAt)
+      logger.info(method, url, statusCode, `${seconds}s`)
+    })
+    next()
+  }
 }
