@@ -1,37 +1,31 @@
-import { HttpResponse } from './httpResponse.js'
+import { Wrapper } from './wrapper.js'
 
 export function Controller (serviceWorkflow) {
   return {
-    add: (req, res, next) => {
-      const httpResponse = HttpResponse(res, next)
+    add: Wrapper((req) => {
       const { projectId, label, description, uiSchema } = req.body
-      httpResponse.send(() => serviceWorkflow.add({ projectId, label, description, uiSchema }))
-    },
-    getList: (req, res, next) => {
+      return serviceWorkflow.add({ projectId, label, description, uiSchema })
+    }),
+    getList: Wrapper((req) => {
       const { projectId = null } = req.params
-      const httpResponse = HttpResponse(res, next)
-      httpResponse.send(() => serviceWorkflow.getList(projectId))
-    },
-    get: (req, res, next) => {
+      return serviceWorkflow.getList(projectId)
+    }),
+    get: Wrapper((req) => {
       const { workflowId } = req.params
-      const httpResponse = HttpResponse(res, next)
-      httpResponse.send(() => serviceWorkflow.get(workflowId))
-    },
-    getUi: (req, res, next) => {
+      return serviceWorkflow.get(workflowId)
+    }),
+    getUi: Wrapper((req) => {
       const { workflowId } = req.params
-      const httpResponse = HttpResponse(res, next)
-      httpResponse.send(() => serviceWorkflow.get(workflowId))
-    },
-    update: (req, res, next) => {
+      return serviceWorkflow.get(workflowId)
+    }),
+    update: Wrapper((req) => {
       const { workflowId } = req.params
       const { projectId, label, description, uiSchema } = req.body
-      const httpResponse = HttpResponse(res, next)
-      httpResponse.send(() => serviceWorkflow.update({ projectId, workflowId, label, description, uiSchema }))
-    },
-    delete: (req, res, next) => {
+      return serviceWorkflow.update({ projectId, workflowId, label, description, uiSchema })
+    }),
+    delete: Wrapper((req) => {
       const { workflowId } = req.params
-      const httpResponse = HttpResponse(res, next)
-      httpResponse.send(() => serviceWorkflow.delete(workflowId))
-    }
+      return serviceWorkflow.delete(workflowId)
+    })
   }
 }
