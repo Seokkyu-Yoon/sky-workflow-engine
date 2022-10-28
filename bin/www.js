@@ -1,11 +1,11 @@
-import '../preload'
+import '../preload.js'
 
 import http from 'http'
 
-import { app } from '@/app'
-import { logger } from '@/module'
+import { app } from '../app.js'
+import { logger } from '../module/index.js'
 
-const getPort = () => {
+function getPort () {
   const strPort = process.env.PORT
   const numPort = parseInt(strPort, 10)
   if (isNaN(numPort)) return strPort

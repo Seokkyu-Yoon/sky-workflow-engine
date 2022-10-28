@@ -1,1 +1,1 @@
-export { Logger as MiddlewareLogger } from './logger'
+export { Middleware as MiddlewareLogger } from './logger.js'

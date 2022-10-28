@@ -1,13 +1,15 @@
-import { logger } from '@/module'
+import { logger } from '../module/index.js'
 
-const delayedSecondsFrom = (startAt = new Date()) => ((new Date().getTime() - startAt.getTime()) / 1000).toFixed(3)
+function delayedSecondsFrom (startAt = new Date()) {
+  return ((new Date().getTime() - startAt.getTime()) / 1000).toFixed(3)
+}
 
-export const Logger = () => {
+export function Middleware () {
   return (req, res, next) => {
     const startAt = new Date()
     res.on('finish', () => {
       const method = req?.method
-      const url = req?.url
+      const url = req?.originalUrl
       const statusCode = res?.statusCode
       const seconds = delayedSecondsFrom(startAt)
       logger.info(method, url, statusCode, `${seconds}s`)

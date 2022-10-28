@@ -1,13 +1,15 @@
 import { Router } from 'express'
 
+import { router as routerApi } from './api/index.js'
+
+import { ControllerRender, ControllerError } from '../controller/index.js'
+
+const controllerRender = ControllerRender()
+const controllerError = ControllerError()
+
 export const router = Router()
 
-router.use('/', async (req, res, next) => {
-  res.render('index.html')
-})
-
-router.use(async (err, req, res, next) => {
-  // render the error page
-  res.status(err.status || 500)
-  res.send(err.message)
-})
+router
+  .use('/api', routerApi)
+  .use('/', controllerRender.render)
+  .use(controllerError.error)

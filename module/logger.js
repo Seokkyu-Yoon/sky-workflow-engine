@@ -19,7 +19,7 @@ const getCallInfo = () => {
   const [,,,, stackText = null] = errForStack.stack.split('\n')
   if (stackText === null) return 'can\'t trace'
 
-  const [, callInfo = null] = stackText.match(/\(([^)]+)\)/) || []
+  const [, callInfo = null] = stackText.match(/\(file:\/\/\/([^)]+)\)/) || []
   if (callInfo === null) return 'can\'t trace'
   const arr = callInfo.split(':')
   const col = arr.pop()

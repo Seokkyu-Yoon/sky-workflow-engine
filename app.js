@@ -4,12 +4,14 @@ import cookieParser from 'cookie-parser'
 import ejs from 'ejs'
 import cors from 'cors'
 
-import { MiddlewareLogger } from './middleware'
+import { MiddlewareLogger } from './middleware/index.js'
 
-const { router } = require('./router')
+import { router } from './router/index.js'
+import { fileURLToPath } from 'url'
 
 export const app = express()
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')

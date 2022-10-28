@@ -1,11 +1,7 @@
-
 import path from 'path'
-import moduleAlias from 'module-alias'
 import * as dotenv from 'dotenv'
 
-const root = path.resolve(require.main.path, '..')
-moduleAlias.addAlias('@', root)
-
+const root = path.resolve(path.dirname(process.argv[1]), '..')
 dotenv.config()
 
 process.env.PORT = process.env.PORT || 8830
