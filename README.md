@@ -45,3 +45,19 @@ Testing with jest
 ```
 npm test
 ```
+
+# Repository manage
+backend directory managed by `git subtree`  
+origin URL - https://github.com/Seokkyu-Yoon/sky-workflow-engine
+```
+git remote sky-github-subtree
+```
+
+1. pull request
+```
+git subtree pull --prefix backend sky-github-subtree master
+```
+2. push request
+```
+git subtree push --prefix backend sky-github-subtree master
+```
