@@ -16,15 +16,15 @@ export function Project (db = null) {
       return db.data.projects || []
     },
     get: async (projectId = null) => {
-      return db.data.projects.find((p) => p.projectId === projectId) || null
+      return db.data.projects.find(p => p.projectId === projectId) || null
     },
-    update: async ({ projectId = null, ...data }) => {
+    update: async (project) => {
+      const projectId = project?.projectId || null
       if (projectId === null) throw new Error('projectId is not defined')
 
-      const idx = db.data.projects.findIndex((p) => p.projectId === projectId)
+      const idx = db.data.projects.findIndex(p => p.projectId === projectId)
       if (idx < 0) throw new Error(`${projectId} is not defined project`)
 
-      const project = { ...data, projectId }
       db.data.projects.splice(idx, 1, project)
       await db.write()
       return project
@@ -32,7 +32,7 @@ export function Project (db = null) {
     delete: async (projectId = null) => {
       if (projectId === null) throw new Error('projectId is not defined')
 
-      const idx = db.data.projects.findIndex((p) => p.projectId === projectId)
+      const idx = db.data.projects.findIndex(p => p.projectId === projectId)
       if (idx < 0) return false
 
       db.data.projects.splice(idx, 1)

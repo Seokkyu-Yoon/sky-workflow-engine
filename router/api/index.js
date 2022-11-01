@@ -1,8 +1,11 @@
-import { Router } from 'express'
+import { Router as ExpressRouter } from 'express'
 
-import { router as routerV1 } from './v1/index.js'
+import { Router as RouterV1 } from './v1/index.js'
 
-export const router = Router()
+export function Router (controllers) {
+  const router = ExpressRouter()
+  router
+    .use('/v1', RouterV1(controllers))
 
-router
-  .use('/v1', routerV1)
+  return router
+}

@@ -6,7 +6,7 @@ import cors from 'cors'
 
 import { MiddlewareLogger } from './middleware/index.js'
 
-import { router } from './router/index.js'
+import { Router } from './router/index.js'
 import { fileURLToPath } from 'url'
 
 export const app = express()
@@ -24,4 +24,4 @@ app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
-app.use('/', router)
+app.use('/', Router())

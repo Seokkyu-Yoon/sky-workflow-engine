@@ -1,20 +1,19 @@
-import { Router } from 'express'
+import { Router as ExpressRouter } from 'express'
 
-import { ControllerProject } from '../../../controller/index.js'
-import { serviceProject, serviceWorkflow } from '../../../service/index.js'
+export function Router (controllers) {
+  const router = ExpressRouter()
 
-const controllerProject = ControllerProject(serviceProject, serviceWorkflow)
+  router
+    .post('/', controllers.project.add)
+    .get('/', controllers.project.getList)
 
-export const router = Router()
+  router
+    .get('/:projectId', controllers.project.get)
+    .put('/:projectId', controllers.project.update)
+    .delete('/:projectId', controllers.project.delete)
 
-router
-  .post('/', controllerProject.add)
-  .get('/', controllerProject.getList)
-
-router
-  .get('/:projectId', controllerProject.get)
-  .put('/:projectId', controllerProject.update)
-  .delete('/:projectId', controllerProject.delete)
-
-router
-  .get('/:projectId/workflows', controllerProject.getWorkflows)
+  router
+    .get('/:projectId/workflows', controllers.project.getWorkflows)
+    .get('/:projectId/cells', controllers.project.getCells)
+  return router
+}

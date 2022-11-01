@@ -17,15 +17,15 @@ export function Workflow (db = null) {
       return (db.data.workflows || []).filter(workflow => workflow.projectId === projectId)
     },
     get: async (workflowId = null) => {
-      return db.data.workflows.find((w) => w.workflowId === workflowId) || null
+      return db.data.workflows.find(w => w.workflowId === workflowId) || null
     },
-    update: async ({ workflowId = null, ...data }) => {
+    update: async (workflow) => {
+      const workflowId = workflow?.workflowId || null
       if (workflowId === null) throw new Error('workflowId is not defined')
 
-      const idx = db.data.workflows.findIndex((w) => w.workflowId === workflowId)
+      const idx = db.data.workflows.findIndex(w => w.workflowId === workflowId)
       if (idx < 0) throw new Error(`${workflowId} is not defined workflow`)
 
-      const workflow = { ...data, workflowId }
       db.data.workflows.splice(idx, 1, workflow)
       await db.write()
       return workflow
@@ -33,7 +33,7 @@ export function Workflow (db = null) {
     delete: async (workflowId = null) => {
       if (workflowId === null) throw new Error('workflowId is not defined')
 
-      const idx = db.data.workflows.findIndex((w) => w.workflowId === workflowId)
+      const idx = db.data.workflows.findIndex(w => w.workflowId === workflowId)
       if (idx < 0) return false
 
       db.data.workflows.splice(idx, 1)

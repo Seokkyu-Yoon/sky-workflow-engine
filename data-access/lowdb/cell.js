@@ -12,19 +12,20 @@ export function Cell (db = null) {
       await db.write()
       return cell
     },
-    getList: async () => {
-      return db.data.cells || []
+    getList: async (projectId = null) => {
+      if (projectId === null) return db.data.cells || []
+      return (db.data.cells || []).filter(cell => cell.projectId === projectId)
     },
     get: async (cellId = null) => {
-      return db.data.cells.find((c) => c.cellId === cellId) || null
+      return db.data.cells.find(c => c.cellId === cellId) || null
     },
-    update: async ({ cellId = null, ...data }) => {
+    update: async (cell) => {
+      const cellId = cell?.cellId || null
       if (cellId === null) throw new Error('cellId is not defined')
 
-      const idx = db.data.cells.findIndex((c) => c.cellId === cellId)
+      const idx = db.data.cells.findIndex(c => c.cellId === cellId)
       if (idx < 0) throw new Error(`${cellId} is not defined cell`)
 
-      const cell = { ...data, cellId }
       db.data.cells.splice(idx, 1, cell)
       await db.write()
       return cell

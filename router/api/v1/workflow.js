@@ -1,20 +1,18 @@
-import { Router } from 'express'
+import { Router as ExpressRouter } from 'express'
 
-import { ControllerWorkflow } from '../../../controller/index.js'
-import { serviceWorkflow } from '../../../service/index.js'
+export function Router (controllers) {
+  const router = ExpressRouter()
 
-const controllerWorkflow = ControllerWorkflow(serviceWorkflow)
+  router
+    .post('/', controllers.workflow.add)
+    .get('/', controllers.workflow.getList)
 
-export const router = Router()
+  router
+    .get('/:workflowId', controllers.workflow.get)
+    .put('/:workflowId', controllers.workflow.update)
+    .delete('/:workflowId', controllers.workflow.delete)
 
-router
-  .post('/', controllerWorkflow.add)
-  .get('/', controllerWorkflow.getList)
-
-router
-  .get('/:workflowId', controllerWorkflow.get)
-  .put('/:workflowId', controllerWorkflow.update)
-  .delete('/:workflowId', controllerWorkflow.delete)
-
-router
-  .get('/:workflowId/ui', controllerWorkflow.getUi)
+  router
+    .get('/:workflowId/ui', controllers.workflow.getUi)
+  return router
+}

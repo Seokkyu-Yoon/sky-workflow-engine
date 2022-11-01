@@ -1,15 +1,16 @@
-import { Router } from 'express'
+import { Router as ExpressRouter } from 'express'
 
-import { router as routerApi } from './api/index.js'
+import { Router as RouterApi } from './api/index.js'
 
-import { ControllerRender, ControllerError } from '../controller/index.js'
+import { Controllers } from '../controller/index.js'
+import { services } from '../service/index.js'
 
-const controllerRender = ControllerRender()
-const controllerError = ControllerError()
-
-export const router = Router()
-
-router
-  .use('/api', routerApi)
-  .use('/', controllerRender.render)
-  .use(controllerError.error)
+export function Router () {
+  const router = ExpressRouter()
+  const controllers = Controllers(services)
+  router
+    .use('/api', RouterApi(controllers))
+    .use('/', controllers.render.render)
+    .use(controllers.error.error)
+  return router
+}
