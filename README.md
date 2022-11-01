@@ -50,7 +50,7 @@ npm test
 backend directory managed by `git subtree`  
 origin URL - https://github.com/Seokkyu-Yoon/sky-workflow-engine
 ```
-git remote sky-github-subtree
+git remote sky-github-subtree git@github.com:Seokkyu-Yoon/sky-workflow-engine.git
 ```
 
 1. pull request
