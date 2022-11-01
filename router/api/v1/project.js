@@ -8,12 +8,12 @@ export function Router (controllers) {
     .get('/', controllers.project.getList)
 
   router
-    .get('/:projectId', controllers.project.get)
-    .put('/:projectId', controllers.project.update)
-    .delete('/:projectId', controllers.project.delete)
+    .get('/:id', controllers.project.get)
+    .put('/:id', controllers.project.update)
+    .delete('/:id', controllers.project.delete)
 
   router
-    .get('/:projectId/workflows', controllers.project.getWorkflows)
-    .get('/:projectId/cells', controllers.project.getCells)
+    .get('/:id/workflows', controllers.project.getWorkflows)
+    .get('/:id/cells', controllers.project.getCells)
   return router
 }

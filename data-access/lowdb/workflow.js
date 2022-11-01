@@ -6,8 +6,8 @@ export function Workflow (db = null) {
   db.data.workflows = db.data.workflows || []
 
   return {
-    add: async ({ workflowId = uuidv4(), ...data }) => {
-      const workflow = { ...data, workflowId }
+    add: async ({ id = uuidv4(), ...data }) => {
+      const workflow = { ...data, id }
       db.data.workflows.push(workflow)
       await db.write()
       return workflow
@@ -16,24 +16,24 @@ export function Workflow (db = null) {
       if (projectId === null) return db.data.workflows || []
       return (db.data.workflows || []).filter(workflow => workflow.projectId === projectId)
     },
-    get: async (workflowId = null) => {
-      return db.data.workflows.find(w => w.workflowId === workflowId) || null
+    get: async (id = null) => {
+      return db.data.workflows.find(w => w.id === id) || null
     },
     update: async (workflow) => {
-      const workflowId = workflow?.workflowId || null
-      if (workflowId === null) throw new Error('workflowId is not defined')
+      const id = workflow?.id || null
+      if (id === null) throw new Error('workflowId is not defined')
 
-      const idx = db.data.workflows.findIndex(w => w.workflowId === workflowId)
-      if (idx < 0) throw new Error(`${workflowId} is not defined workflow`)
+      const idx = db.data.workflows.findIndex(w => w.id === id)
+      if (idx < 0) throw new Error(`${id} is not defined workflow`)
 
       db.data.workflows.splice(idx, 1, workflow)
       await db.write()
       return workflow
     },
-    delete: async (workflowId = null) => {
-      if (workflowId === null) throw new Error('workflowId is not defined')
+    delete: async (id = null) => {
+      if (id === null) throw new Error('workflowId is not defined')
 
-      const idx = db.data.workflows.findIndex(w => w.workflowId === workflowId)
+      const idx = db.data.workflows.findIndex(w => w.id === id)
       if (idx < 0) return false
 
       db.data.workflows.splice(idx, 1)

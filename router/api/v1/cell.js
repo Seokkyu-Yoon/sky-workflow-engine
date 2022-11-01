@@ -8,8 +8,8 @@ export function Router (controllers) {
     .get('/', controllers.cell.getList)
 
   router
-    .get('/:cellId', controllers.cell.get)
-    .put('/:cellId', controllers.cell.update)
-    .delete('/:cellId', controllers.cell.delete)
+    .get('/:id', controllers.cell.get)
+    .put('/:id', controllers.cell.update)
+    .delete('/:id', controllers.cell.delete)
   return router
 }

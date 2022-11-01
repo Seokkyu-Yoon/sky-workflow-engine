@@ -6,8 +6,8 @@ export function Cell (db = null) {
   db.data.cells = db.data.cells || []
 
   return {
-    add: async ({ cellId = uuidv4(), ...data }) => {
-      const cell = { ...data, cellId }
+    add: async ({ id = uuidv4(), ...data }) => {
+      const cell = { ...data, id }
       db.data.cells.push(cell)
       await db.write()
       return cell
@@ -16,24 +16,24 @@ export function Cell (db = null) {
       if (projectId === null) return db.data.cells || []
       return (db.data.cells || []).filter(cell => cell.projectId === projectId)
     },
-    get: async (cellId = null) => {
-      return db.data.cells.find(c => c.cellId === cellId) || null
+    get: async (id = null) => {
+      return db.data.cells.find(c => c.id === id) || null
     },
     update: async (cell) => {
-      const cellId = cell?.cellId || null
-      if (cellId === null) throw new Error('cellId is not defined')
+      const id = cell?.id || null
+      if (id === null) throw new Error('cellId is not defined')
 
-      const idx = db.data.cells.findIndex(c => c.cellId === cellId)
-      if (idx < 0) throw new Error(`${cellId} is not defined cell`)
+      const idx = db.data.cells.findIndex(c => c.id === id)
+      if (idx < 0) throw new Error(`${id} is not defined cell`)
 
       db.data.cells.splice(idx, 1, cell)
       await db.write()
       return cell
     },
-    delete: async (cellId = null) => {
-      if (cellId === null) throw new Error('cellId is not defined')
+    delete: async (id = null) => {
+      if (id === null) throw new Error('cellId is not defined')
 
-      const idx = db.data.cells.findIndex((c) => c.cellId === cellId)
+      const idx = db.data.cells.findIndex((c) => c.id === id)
       if (idx < 0) return false
 
       db.data.cells.splice(idx, 1)

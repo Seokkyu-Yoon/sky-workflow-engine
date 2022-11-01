@@ -12,13 +12,13 @@ export function Service (dataAccess) {
       const cells = cellInfos.map(ModelCell)
       return cells
     },
-    get: async (cellId = null) => {
-      const cellInfo = await dataAccess.cells.get(cellId)
+    get: async (id = null) => {
+      const cellInfo = await dataAccess.cells.get(id)
       const cell = ModelCell(cellInfo)
       return cell
     },
-    update: async ({ cellId = null, ...data }) => {
-      const cellInfo = await dataAccess.cells.get(cellId)
+    update: async ({ id = null, ...data }) => {
+      const cellInfo = await dataAccess.cells.get(id)
       const cell = ModelCell(cellInfo)
       for (const key of Object.keys(cell)) {
         if (typeof data[key] !== 'undefined') cell[key] = data[key]
@@ -27,8 +27,8 @@ export function Service (dataAccess) {
       const cellUpdated = ModelCell(cellInfoUpdated)
       return cellUpdated
     },
-    delete: async (cellId = null) => {
-      const deleted = await dataAccess.cells.delete(cellId)
+    delete: async (id = null) => {
+      const deleted = await dataAccess.cells.delete(id)
       return deleted
     }
   }

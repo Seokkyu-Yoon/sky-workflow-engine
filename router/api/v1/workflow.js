@@ -8,11 +8,11 @@ export function Router (controllers) {
     .get('/', controllers.workflow.getList)
 
   router
-    .get('/:workflowId', controllers.workflow.get)
-    .put('/:workflowId', controllers.workflow.update)
-    .delete('/:workflowId', controllers.workflow.delete)
+    .get('/:id', controllers.workflow.get)
+    .put('/:id', controllers.workflow.update)
+    .delete('/:id', controllers.workflow.delete)
 
   router
-    .get('/:workflowId/ui', controllers.workflow.getUi)
+    .get('/:id/ui', controllers.workflow.getUi)
   return router
 }

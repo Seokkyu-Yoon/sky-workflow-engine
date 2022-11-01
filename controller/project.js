@@ -2,8 +2,8 @@ export function Controller (controllerFactory) {
   return (services) => {
     return {
       add: controllerFactory.make(async (req, res) => {
-        const { label, description } = req.body
-        const result = await services.project.add({ label, description })
+        const { id, name, description } = req.body
+        const result = await services.project.add({ id, name, description })
         res.send(result)
       }),
       getList: controllerFactory.make(async (req, res) => {
@@ -11,29 +11,29 @@ export function Controller (controllerFactory) {
         res.send(result)
       }),
       get: controllerFactory.make(async (req, res) => {
-        const { projectId } = req.params
-        const result = await services.project.get(projectId)
+        const { id } = req.params
+        const result = await services.project.get(id)
         res.send(result)
       }),
       getWorkflows: controllerFactory.make(async (req, res) => {
-        const { projectId } = req.params
-        const result = await services.workflow.getList(projectId)
+        const { id } = req.params
+        const result = await services.workflow.getList(id)
         res.send(result)
       }),
       getCells: controllerFactory.make(async (req, res) => {
-        const { projectId } = req.params
-        const result = await services.cell.getList(projectId)
+        const { id } = req.params
+        const result = await services.cell.getList(id)
         res.send(result)
       }),
       update: controllerFactory.make(async (req, res) => {
-        const { projectId } = req.params
-        const { label, description } = req.body
-        const result = await services.project.update({ projectId, label, description })
+        const { id } = req.params
+        const { name, description } = req.body
+        const result = await services.project.update({ id, name, description })
         res.send(result)
       }),
       delete: controllerFactory.make(async (req, res) => {
-        const { projectId } = req.params
-        const result = await services.project.delete(projectId)
+        const { id } = req.params
+        const result = await services.project.delete(id)
         res.send(result)
       })
     }

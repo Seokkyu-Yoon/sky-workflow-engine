@@ -12,18 +12,18 @@ export function Service (dataAccess) {
       const workflows = workflowInfos.map(ModelWorkflow)
       return workflows
     },
-    get: async (workflowId = null) => {
-      const workflowInfo = await dataAccess.workflows.get(workflowId)
+    get: async (id = null) => {
+      const workflowInfo = await dataAccess.workflows.get(id)
       const workflow = ModelWorkflow(workflowInfo)
       return workflow
     },
-    getUi: async (workflowId = null) => {
-      const workflowInfo = await dataAccess.workflows.get(workflowId)
+    getUi: async (id = null) => {
+      const workflowInfo = await dataAccess.workflows.get(id)
       const workflow = ModelWorkflow(workflowInfo)
       return workflow.uiSchema
     },
-    update: async ({ workflowId = null, ...data }) => {
-      const workflowInfo = await dataAccess.workflows.get(workflowId)
+    update: async ({ id = null, ...data }) => {
+      const workflowInfo = await dataAccess.workflows.get(id)
       const workflow = ModelWorkflow(workflowInfo)
       for (const key of Object.keys(workflow)) {
         if (typeof data[key] !== 'undefined') workflow[key] = data[key]
@@ -32,8 +32,8 @@ export function Service (dataAccess) {
       const workflowUpdated = ModelWorkflow(workflowInfoUpdated)
       return workflowUpdated
     },
-    delete: async (workflowId) => {
-      const deleted = await dataAccess.workflows.delete(workflowId)
+    delete: async (id) => {
+      const deleted = await dataAccess.workflows.delete(id)
       return deleted
     }
   }
