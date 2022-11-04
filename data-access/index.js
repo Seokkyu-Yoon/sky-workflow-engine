@@ -1,6 +1,8 @@
 import { LowDb } from './lowdb/index.js'
 
-const lowDb = await LowDb()
+const Low = LowDb()
 export async function DataAccess () {
-  return lowDb
+  return {
+    connect: async () => await Low()
+  }
 }

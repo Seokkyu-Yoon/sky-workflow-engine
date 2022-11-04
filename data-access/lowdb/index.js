@@ -4,19 +4,30 @@ import { config } from './config.js'
 import { Project } from './project.js'
 import { Workflow } from './workflow.js'
 import { Cell } from './cell.js'
+import { logger } from '../../module/index.js'
 
-let lowDb = null
-export async function LowDb () {
-  if (lowDb !== null) return lowDb
-  const adapter = new JSONFile(config.path)
-  const db = new Low(adapter)
-  await db.read()
-  db.data = db.data || {}
-
-  lowDb = {
-    project: Project(db),
-    workflow: Workflow(db),
-    cell: Cell(db)
+export function LowDb () {
+  let lowdb = null
+  ; (function createLowDb () {
+    const createAfter = new Date().getTime() + 3000
+    try {
+      const adapter = new JSONFile(config.path)
+      lowdb = new Low(adapter)
+    } catch (err) {
+      logger.error(err)
+      lowdb = null
+      setTimeout(() => {
+        createLowDb()
+      }, Math.max(createAfter - new Date().getTime(), 0))
+    }
+  })()
+  return async () => {
+    await lowdb.read()
+    lowdb.data = lowdb.data || {}
+    return {
+      project: Project(lowdb),
+      workflow: Workflow(lowdb),
+      cell: Cell(lowdb)
+    }
   }
-  return lowDb
 }
