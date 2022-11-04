@@ -10,8 +10,8 @@ export function Service (dataAccess) {
     getList: async () => {
       const projectInfos = await dataAccess.project.getList()
       const projects = await Promise.all(projectInfos.map(Project).map(async modelProject => {
-        const workflows = await dataAccess.workflows.getList(modelProject.id)
-        const cells = await dataAccess.cells.getList(modelProject.id)
+        const workflows = await dataAccess.workflow.getList(modelProject.id)
+        const cells = await dataAccess.cell.getList(modelProject.id)
         return {
           ...modelProject,
           workflows: workflows.map(({ id, name }) => ({ id, name })),
