@@ -2,8 +2,8 @@ export function Controller (controllerFactory) {
   return (services) => {
     return {
       add: controllerFactory.make(async (req, res) => {
-        const { id, projectId, label, description, uiSchema } = req.body
-        const result = await services.workflow.add({ id, projectId, label, description, uiSchema })
+        const { id, projectId, name, description, uiSchema } = req.body
+        const result = await services.workflow.add({ id, projectId, name, description, uiSchema })
         res.send(result)
       }),
       getList: controllerFactory.make(async (req, res) => {
@@ -22,8 +22,8 @@ export function Controller (controllerFactory) {
       }),
       update: controllerFactory.make(async (req, res) => {
         const { id } = req.params
-        const { projectId, label, description, uiSchema } = req.body
-        const result = await services.workflow.update({ id, projectId, label, description, uiSchema })
+        const { projectId, name, description, uiSchema } = req.body
+        const result = await services.workflow.update({ id, projectId, name, description, uiSchema })
         res.send(result)
       }),
       delete: controllerFactory.make(async (req, res) => {

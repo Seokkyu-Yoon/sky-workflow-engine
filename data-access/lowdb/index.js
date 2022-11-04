@@ -14,9 +14,9 @@ export async function LowDb () {
   db.data = db.data || {}
 
   lowDb = {
-    projects: Project(db),
-    workflows: Workflow(db),
-    cells: Cell(db)
+    project: Project(db),
+    workflow: Workflow(db),
+    cell: Cell(db)
   }
   return lowDb
 }

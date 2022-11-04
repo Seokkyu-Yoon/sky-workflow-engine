@@ -16,7 +16,15 @@ const getTimeStamp = (objDate = new Date()) => {
 
 const getCallInfo = () => {
   const errForStack = new Error('logline')
-  const [,,,, stackText = null] = errForStack.stack.split('\n')
+  const [
+    stackText0 = null,
+    stackText1 = null,
+    stackText2 = null,
+    stackText3 = null,
+    stackText4 = null
+  ] = errForStack.stack.split('\n')
+  const stackText = stackText4 || stackText3 || stackText2 || stackText1 || stackText0
+
   if (stackText === null) return 'can\'t trace'
 
   const [, callInfo = null] = stackText.match(/\(file:\/\/\/([^)]+)\)/) || []

@@ -14,7 +14,7 @@ export function Cell (db = null) {
     },
     getList: async (projectId = null) => {
       if (projectId === null) return db.data.cells || []
-      return (db.data.cells || []).filter(cell => cell.projectId === projectId)
+      return (db.data.cells || []).filter(c => c.projectId === projectId)
     },
     get: async (id = null) => {
       return db.data.cells.find(c => c.id === id) || null

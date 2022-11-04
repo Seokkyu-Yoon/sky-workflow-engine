@@ -34,12 +34,12 @@ export const CellController = Cell(factory)
 export const RenderController = Render(factory)
 export const ErrorController = Error(factory)
 
-export function Controllers (services) {
+export function Controller (service) {
   return {
-    project: ProjectController(services),
-    workflow: WorkflowController(services),
-    cell: CellController(services),
-    render: RenderController(services),
-    error: ErrorController(services)
+    project: ProjectController(service),
+    workflow: WorkflowController(service),
+    cell: CellController(service),
+    render: RenderController(service),
+    error: ErrorController(service)
   }
 }

@@ -1,14 +1,14 @@
 import { Router as ExpressRouter } from 'express'
 
-import { Router as RouterProject } from './project.js'
-import { Router as RouterWorkflow } from './workflow.js'
-import { Router as RouterCell } from './cell.js'
+import { Router as Project } from './project.js'
+import { Router as Workflow } from './workflow.js'
+import { Router as Cell } from './cell.js'
 
-export function Router (controllers) {
+export function Router (controller) {
   const router = ExpressRouter()
   router
-    .use('/projects', RouterProject(controllers))
-    .use('/workflows', RouterWorkflow(controllers))
-    .use('/cells', RouterCell(controllers))
+    .use('/projects', Project(controller))
+    .use('/workflows', Workflow(controller))
+    .use('/cells', Cell(controller))
   return router
 }

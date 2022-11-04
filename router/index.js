@@ -2,15 +2,15 @@ import { Router as ExpressRouter } from 'express'
 
 import { Router as RouterApi } from './api/index.js'
 
-import { Controllers } from '../controller/index.js'
-import { services } from '../service/index.js'
+import { Controller } from '../controller/index.js'
+import * as service from '../service/index.js'
 
 export function Router () {
   const router = ExpressRouter()
-  const controllers = Controllers(services)
+  const controller = Controller(service)
   router
-    .use('/api', RouterApi(controllers))
-    .use('/', controllers.render.render)
-    .use(controllers.error.error)
+    .use('/api', RouterApi(controller))
+    .use('/', controller.render.render)
+    .use(controller.error.error)
   return router
 }
