@@ -4,13 +4,15 @@ function makeProcess (spec) {
   let timeout = null
   let interval = null
   function run (onData = (e) => {}) {
+    const minMs = 3000
+    const maxMs = 10000
     timeout = setTimeout(() => {
       clearInterval(interval)
       onData({
         status: 'finished',
         data: 'finish test'
       })
-    }, Math.floor(Math.random() * 7000 + 3000))
+    }, Math.floor(Math.random() * (maxMs - minMs)) + minMs)
 
     interval = setInterval(() => {
       if (Math.random() < 0.001) {

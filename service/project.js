@@ -46,11 +46,11 @@ export function Service (dataAccess) {
     },
     delete: async (id = null) => {
       const cursor = await dataAccess.connect()
-      const workflows = await cursor.workflows.getList(id)
-      const cells = await cursor.cells.getList(id)
+      const workflows = await cursor.workflow.getList(id)
+      const cells = await cursor.cell.getList(id)
 
-      await Promise.all(workflows.map(wf => cursor.workflows.delete(wf.workflowId)))
-      await Promise.all(cells.map(c => cursor.cells.delete(c.cellId)))
+      await Promise.all(workflows.map(wf => cursor.workflow.delete(wf.workflowId)))
+      await Promise.all(cells.map(c => cursor.cell.delete(c.cellId)))
 
       const deleted = await cursor.project.delete(id)
       return deleted
