@@ -13,7 +13,7 @@ export const app = express()
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 // view engine setup
-app.set('views', path.join(__dirname, 'views'))
+app.set('views', path.join(__dirname, 'public'))
 app.set('view engine', 'ejs')
 app.engine('html', ejs.renderFile)
 

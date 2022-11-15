@@ -3,7 +3,7 @@ import '../preload.js'
 import http from 'http'
 
 import { app } from '../app.js'
-import { logger } from '../module/index.js'
+import { logger, SocketServer } from '../module/index.js'
 
 function getPort () {
   const strPort = process.env.PORT
@@ -16,7 +16,8 @@ function getPort () {
 const port = getPort()
 app.set('port', port)
 
-const server = http.createServer(app)
+const server = SocketServer(http.createServer(app))
+// const server = SocketIo(http.createServer(app))
 
 const onListening = () => {
   const addr = server.address()

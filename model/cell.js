@@ -42,9 +42,12 @@ export function Model (cellInfo) {
   const projectId = cellInfo?.projectId || null
   const name = cellInfo?.name || null
   const description = cellInfo?.description || null
-  const inputs = (cellInfo?.inputs || []).map(Input)
-  const outputs = (cellInfo?.outputs || []).map(Output)
-  const params = (cellInfo?.params || []).map(Param)
+  // const inputs = (cellInfo?.inputs || []).map(Input)
+  const inputs = cellInfo?.inputs || []
+  // const outputs = (cellInfo?.outputs || []).map(Output)
+  const outputs = cellInfo?.outputs || []
+  // const params = (cellInfo?.params || []).map(Param)
+  const params = cellInfo?.params || []
 
   return {
     id,

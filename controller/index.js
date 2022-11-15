@@ -8,7 +8,7 @@ function Render (controllerFactory) {
     render: (req, res, next) => {
       return controllerFactory.make((req, res) => {
         const filename = 'index.html'
-        res.render(() => filename)
+        res.render(filename)
       })(req, res, next)
     }
   })
