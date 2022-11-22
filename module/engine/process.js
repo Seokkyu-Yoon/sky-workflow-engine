@@ -58,7 +58,7 @@ function sampleProcess (spec) {
 
     let per = 0
     interval = setInterval(() => {
-      if (Math.random() < 0.01) {
+      if (Math.random() < 0.001) {
         onData({
           status: 'errored',
           body: {
@@ -85,8 +85,5 @@ function sampleProcess (spec) {
     clearInterval(interval)
   }
 
-  return {
-    run,
-    stop
-  }
+  return { run, stop }
 }

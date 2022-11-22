@@ -5,17 +5,19 @@ export function Project (db = null) {
 
   db.data.projects = db.data.projects || []
 
-  return {
+  const project = {
     add: async ({ id = uuidv4(), ...data }) => {
-      const project = { ...data, id }
-      db.data.projects.push(project)
+      const p = { ...data, id }
+      if (await project.get(id) !== null) throw new Error('project id is already exists')
+      db.data.projects.push(p)
       await db.write()
-      return project
+      return p
     },
     getList: async () => {
       return db.data.projects || []
     },
     get: async (id = null) => {
+      console.log(db.data.projects, id)
       return db.data.projects.find(p => p.id === id) || null
     },
     update: async (project) => {
@@ -40,4 +42,5 @@ export function Project (db = null) {
       return true
     }
   }
+  return project
 }

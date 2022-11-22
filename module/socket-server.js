@@ -1,5 +1,5 @@
 import { WebSocketServer } from 'ws'
-import { Engine } from './engine.js'
+import { Engine } from './engine/index.js'
 
 /**
  * @param {import('http').Server} server
@@ -13,7 +13,8 @@ export function SocketServer (server) {
 function onConnection (socket) {
   const socketRouter = WebSocketRouter(socket)
   socketRouter.use('run:*', (req, res) => {
-    Engine(req, res)
+    const engine = Engine(req, res)
+    engine.run()
   })
 }
 
@@ -43,27 +44,43 @@ function Request (body) {
   }
 }
 function Response (socket, eventName) {
+  let expired = false
+  function onSend (expired, data) {
+    if (expired) return
+    socket.send(JSON.stringify(data))
+  }
   let status = 200
   const res = {
+    expire: () => { expired = true },
     status: code => {
       status = code
       return res
     },
-    emit: (eventName, body) => socket.send(JSON.stringify({
-      eventName,
-      status,
-      body
-    })),
-    notify: body => socket.send(JSON.stringify({
-      eventName: `${eventName}:notify`,
-      status,
-      body
-    })),
-    send: body => socket.send(JSON.stringify({
-      eventName,
-      status,
-      body
-    }))
+    emit: (eventName, body) => {
+      const data = {
+        eventName,
+        status,
+        body
+      }
+      onSend(expired, data)
+    },
+    notify: body => {
+      const data = {
+        eventName: `${eventName}:notify`,
+        status,
+        body
+      }
+      onSend(expired, data)
+      return res
+    },
+    send: body => {
+      const data = {
+        eventName,
+        status,
+        body
+      }
+      onSend(expired, data)
+    }
   }
   return res
 }
