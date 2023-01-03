@@ -38,24 +38,25 @@ export function Model (cellInfo) {
   if (cellInfo === null) throw new Error('cellInfo is empty')
   // [TODO] check cellInfo
   logger.debug(cellInfo)
-  const id = cellInfo?.id || uuidv4()
-  const projectId = cellInfo?.projectId || null
-  const name = cellInfo?.name || null
-  const description = cellInfo?.description || null
-  // const inputs = (cellInfo?.inputs || []).map(Input)
-  const inputs = cellInfo?.inputs || []
-  // const outputs = (cellInfo?.outputs || []).map(Output)
-  const outputs = cellInfo?.outputs || []
-  // const params = (cellInfo?.params || []).map(Param)
-  const params = cellInfo?.params || []
+  // const id = cellInfo?.id || uuidv4()
+  // const projectId = cellInfo?.projectId || null
+  // const name = cellInfo?.name || null
+  // const description = cellInfo?.description || null
+  // // const inputs = (cellInfo?.inputs || []).map(Input)
+  // const inputs = cellInfo?.inputs || []
+  // // const outputs = (cellInfo?.outputs || []).map(Output)
+  // const outputs = cellInfo?.outputs || []
+  // // const params = (cellInfo?.params || []).map(Param)
+  // const params = cellInfo?.params || []
 
-  return {
-    id,
-    projectId,
-    name,
-    description,
-    inputs,
-    outputs,
-    params
-  }
+  // return {
+  //   id,
+  //   projectId,
+  //   name,
+  //   description,
+  //   inputs,
+  //   outputs,
+  //   params
+  // }
+  return cellInfo
 }
