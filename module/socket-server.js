@@ -1,5 +1,5 @@
 import { WebSocketServer } from 'ws'
-import { Engine } from './engine/index.js'
+// import { Engine } from './engine/index.js'
 
 /**
  * @param {import('http').Server} server
@@ -13,8 +13,8 @@ export function SocketServer (server) {
 function onConnection (socket) {
   const socketRouter = WebSocketRouter(socket)
   socketRouter.use('run:*', (req, res) => {
-    const engine = Engine(req, res)
-    engine.run()
+    // const engine = Engine(req, res)
+    // engine.run()
   })
 }
 

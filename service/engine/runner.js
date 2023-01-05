@@ -1,7 +1,23 @@
 import { logger } from '../../module/index.js'
 
+const STATUS_READY = 0
+const STATUS_RUNNING = 1
+const STATUS_FINISHED = 2
+const STATUS_STOPPED = 3
+const STATUS_ERROR = 4
+function getStatusName (code) {
+  switch (code) {
+    case STATUS_READY: return 'ready'
+    case STATUS_RUNNING: return 'running'
+    case STATUS_FINISHED: return 'finished'
+    case STATUS_STOPPED: return 'stopped'
+    case STATUS_ERROR: return 'error'
+    default: return 'unknown'
+  }
+}
+
 export function Runner (dataAccess, { nodes, links }) {
-  let status = 'ready'
+  let status = STATUS_READY
   const errors = []
   const nodeMap = new Map(nodes.map(nodeInfo => [nodeInfo.id, Node(nodeInfo)]))
   links.forEach(({
@@ -10,18 +26,18 @@ export function Runner (dataAccess, { nodes, links }) {
   }) => {
     const srcNode = nodeMap.get(srcNodeId) || {
       id: srcNodeId,
-      status: () => 'finished'
+      status: () => STATUS_FINISHED
     }
     const tarNode = nodeMap.get(tarNodeId) || {
       id: tarNodeId,
-      status: () => 'finished'
+      status: () => STATUS_FINISHED
     }
     tarNode.addPrevious(srcNode, srcPortId, tarPortId)
   })
 
   const runner = {
     run: () => {
-      status = 'running'
+      status = STATUS_RUNNING
       let isDone = true
 
       for (const node of nodeMap.values()) {
@@ -40,38 +56,38 @@ export function Runner (dataAccess, { nodes, links }) {
       if (!isDone) return
 
       for (const node of nodeMap.values()) {
-        if (node.status() !== 'finished') {
-          status = 'errored'
+        if (node.status() !== STATUS_FINISHED) {
+          status = STATUS_ERROR
           return
         }
       }
-      status = 'finished'
+      status = STATUS_FINISHED
     },
-    status: () => status,
-    get: () => {
-      const engineStatus = {
-        engine: status,
-        // fromEntries [['a', 10], ['b', 20]] -> {a: 10, b: 20}
-        nodes: Object.fromEntries([...nodeMap].map(([id, node]) => [
+    status: () => getStatusName(status),
+    get: () => ({
+      engine: getStatusName(status),
+      // fromEntries: [['a', 10], ['b', 20]] -> {a: 10, b: 20}
+      nodes: Object.fromEntries(
+        [...nodeMap].map(([id, node]) => [
           id,
-          node.status()
-        ]))
-      }
-      if (status === 'errored') engineStatus.errors = errors
-      return engineStatus
-    }
+          getStatusName(node.status())
+        ])
+      ),
+      ...(status === STATUS_ERROR && { errors }) // on error add errors
+    })
   }
   return runner
 }
+
 function Node ({ id, algorithmId, inPorts, outPorts, parameters }) {
-  let status = 'ready'
+  let status = STATUS_READY
   const preNodes = new Set()
   const inPortMap = new Map()
 
   return {
     status: () => status,
     run: (onFinish) => {
-      status = 'running'
+      status = STATUS_RUNNING
       // [TODO] read algorithm info
       // [TODO] spawn algorithm to parsed spec
       // [TODO]
@@ -83,17 +99,17 @@ function Node ({ id, algorithmId, inPorts, outPorts, parameters }) {
       logger.debug(`* run node(${id} / finish after ${ms}ms)`)
       setTimeout(() => {
         let err = null
-        status = Math.random() > 0.1 ? 'finished' : 'errored'
-        if (status === 'errored') err = new Error('random value lose than 0.3')
+        status = Math.random() > 0.1 ? STATUS_FINISHED : STATUS_ERROR
+        if (status === STATUS_ERROR) err = new Error('random value lose than 0.3')
         onFinish(err)
         logger.debug(`* node(${id}) ${status}`)
       }, ms)
     },
-    isRunning: () => status === 'running',
+    isRunning: () => status === STATUS_RUNNING,
     isRunnable: () => {
-      if (status !== 'ready') return false
+      if (status !== STATUS_READY) return false
       for (const preNode of preNodes.values()) {
-        if (preNode.status() !== 'finished') return false
+        if (preNode.status() !== STATUS_FINISHED) return false
       }
       return true
     },
