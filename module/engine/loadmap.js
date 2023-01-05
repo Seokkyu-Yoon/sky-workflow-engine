@@ -1,7 +1,7 @@
 import { Piece } from './piece.js'
 
-export function LoadMap (cells, links) {
-  const map = cells.reduce((map, spec) => {
+export function LoadMap (nodes, links) {
+  const map = nodes.reduce((map, spec) => {
     const { id } = spec
     map.set(id, Piece(spec))
     return map
@@ -35,7 +35,7 @@ export function LoadMap (cells, links) {
       res.status(500).send(errors)
       return
     }
-    res.status(200).send({ cellId: '*', message: 'finished' })
+    res.status(200).send({ nodeId: '*', message: 'finished' })
   }
   return {
     map,

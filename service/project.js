@@ -16,11 +16,11 @@ export function Service (dataAccess) {
       const projectInfos = await cursor.project.getList()
       const projects = await Promise.all(projectInfos.map(Project).map(async modelProject => {
         const workflows = await cursor.workflow.getList(modelProject.id)
-        const cells = await cursor.cell.getList(modelProject.id)
+        const algorithms = await cursor.algorithm.getList(modelProject.id)
         return {
           ...modelProject,
           workflows: workflows.map(({ id, name }) => ({ id, name })),
-          cells: cells.map(({ id, name }) => ({ id, name }))
+          algorithms: algorithms.map(({ id, name }) => ({ id, name }))
         }
       }))
       return projects
@@ -47,10 +47,10 @@ export function Service (dataAccess) {
     delete: async (id = null) => {
       const cursor = await dataAccess.connect()
       const workflows = await cursor.workflow.getList(id)
-      const cells = await cursor.cell.getList(id)
+      const algorithms = await cursor.algorithm.getList(id)
 
       await Promise.all(workflows.map(wf => cursor.workflow.delete(wf.workflowId)))
-      await Promise.all(cells.map(c => cursor.cell.delete(c.cellId)))
+      await Promise.all(algorithms.map(a => cursor.algorithm.delete(a.algorithmId)))
 
       const deleted = await cursor.project.delete(id)
       return deleted

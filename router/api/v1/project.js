@@ -1,19 +1,17 @@
-import { Router as ExpressRouter } from 'express'
-
-export function Router (controllers) {
-  const router = ExpressRouter()
+export function Router (Router, controller) {
+  const router = Router()
 
   router
-    .post('/', controllers.project.add)
-    .get('/', controllers.project.getList)
+    .post('/', controller.add)
+    .get('/', controller.getList)
 
   router
-    .get('/:id', controllers.project.get)
-    .put('/:id', controllers.project.update)
-    .delete('/:id', controllers.project.delete)
+    .get('/:id', controller.get)
+    .put('/:id', controller.update)
+    .delete('/:id', controller.delete)
 
-  router
-    .get('/:id/workflows', controllers.project.getWorkflows)
-    .get('/:id/cells', controllers.project.getCells)
+  // router
+  //   .get('/:id/workflows', controllers.project.getWorkflows)
+  //   .get('/:id/algorithms', controllers.project.getAlgorithms)
   return router
 }

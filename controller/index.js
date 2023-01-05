@@ -1,45 +1,31 @@
 import { Factory } from './factory.js'
+
 import { Controller as Project } from './project.js'
 import { Controller as Workflow } from './workflow.js'
+import { Controller as Algorithm } from './algorithm.js'
 import { Controller as Cell } from './cell.js'
+import { Controller as Engine } from './engine.js'
 
-function Render (controllerFactory) {
-  return () => ({
-    render: (req, res, next) => {
-      return controllerFactory.make((req, res) => {
-        const filename = 'index.html'
-        res.render(filename)
-      })(req, res, next)
-    }
-  })
-}
+import { Controller as Error } from './error.js'
+import { Controller as Render } from './render.js'
 
-function Error (controllerFactory) {
-  return () => ({
-    error: (err, req, res, next) => {
-      // res.status(err.status || 500)
-      // res.send(err.message)
-      return controllerFactory.make((req, res) => {
-        res.status(err.status || 500)
-        res.send(err.message)
-      })(req, res, next)
-    }
-  })
-}
+export function Controller (service, type = 'express') {
+  const factory = Factory(type)
+  const project = Project(factory, service)
+  const workflow = Workflow(factory, service)
+  const algorithm = Algorithm(factory, service)
+  const cell = Cell(factory, service)
+  const engine = Engine(factory, service.engine)
+  const render = Render(factory, service)
+  const error = Error(factory, service)
 
-const factory = Factory('express')
-export const ProjectController = Project(factory)
-export const WorkflowController = Workflow(factory)
-export const CellController = Cell(factory)
-export const RenderController = Render(factory)
-export const ErrorController = Error(factory)
-
-export function Controller (service) {
   return {
-    project: ProjectController(service),
-    workflow: WorkflowController(service),
-    cell: CellController(service),
-    render: RenderController(service),
-    error: ErrorController(service)
+    project,
+    workflow,
+    algorithm,
+    cell,
+    engine,
+    render,
+    error
   }
 }

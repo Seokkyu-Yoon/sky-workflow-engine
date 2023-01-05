@@ -7,10 +7,6 @@ export function Router (Router, controller) {
 
   router
     .get('/:id', controller.get)
-    .put('/:id', controller.update)
     .delete('/:id', controller.delete)
-
-  // router
-  // .get('/:id/outputs/:fileId', controller.workflow.getOutput)
   return router
 }

@@ -7,7 +7,7 @@ export function Process (spec) {
       onData({
         status: 'errored',
         body: {
-          cellId: spec.id,
+          nodeId: spec.id,
           message: 'already running...'
         }
       })
@@ -50,7 +50,7 @@ function sampleProcess (spec) {
       onData({
         status: 'finished',
         body: {
-          cellId: id,
+          nodeId: id,
           message: 'finished'
         }
       })
@@ -62,7 +62,7 @@ function sampleProcess (spec) {
         onData({
           status: 'errored',
           body: {
-            cellId: id,
+            nodeId: id,
             message: 'internal server error'
           }
         })
@@ -74,7 +74,7 @@ function sampleProcess (spec) {
       onData({
         status: 'running',
         body: {
-          cellId: id,
+          nodeId: id,
           message: `${per}%...`
         }
       })

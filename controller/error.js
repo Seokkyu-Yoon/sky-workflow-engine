@@ -1,19 +1,18 @@
 import createError from 'http-errors'
-import { logger } from '../module/index.js'
 
-export function ErrorCollector (errorSender) {
-  const onError = err => errorSender(Error(err))
-  return async callback => {
-    try {
-      await callback()
-    } catch (err) {
-      logger.error(err)
-      onError(err)
-    }
+export function Controller (make, service) {
+  return {
+    get: (err, req, res, next) => {
+      console.log(err)
+      // res.status(err.status || 500)
+      // res.send(err.message)
+      return make((req, res, next) => {
+        res.status(err.status || 500)
+        res.send(err.message)
+      })(req, res, next)
+    },
+    throw: make((req, res, next) => {
+      next(createError(404))
+    })
   }
-}
-
-function Error (err) {
-  // [TODO] onError
-  return createError(err)
 }

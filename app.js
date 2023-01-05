@@ -1,16 +1,19 @@
-import express from 'express'
+import express, { Router as ExpressRouter } from 'express'
 import path from 'path'
 import cookieParser from 'cookie-parser'
 import ejs from 'ejs'
 import cors from 'cors'
+import { fileURLToPath } from 'url'
+
+import { Controller } from './controller/index.js'
+import * as service from './service/index.js'
 
 import { MiddlewareLogger } from './middleware/index.js'
 
 import { Router } from './router/index.js'
-import { fileURLToPath } from 'url'
 
 export const app = express()
-
+const controller = Controller(service)
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 // view engine setup
 app.set('views', path.join(__dirname, 'public'))
@@ -24,4 +27,4 @@ app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
-app.use('/', Router())
+app.use('/', Router(ExpressRouter, controller))

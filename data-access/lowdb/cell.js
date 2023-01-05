@@ -33,7 +33,7 @@ export function Cell (db = null) {
     delete: async (id = null) => {
       if (id === null) throw new Error('cellId is not defined')
 
-      const idx = db.data.cells.findIndex((c) => c.id === id)
+      const idx = db.data.cells.findIndex(c => c.id === id)
       if (idx < 0) return false
 
       db.data.cells.splice(idx, 1)
