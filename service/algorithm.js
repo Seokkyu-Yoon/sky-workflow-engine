@@ -13,7 +13,6 @@ export function Service (dataAccess) {
     },
     getList: async (projectId = null) => {
       const cursor = await dataAccess.connect()
-      console.log(cursor)
       const algorithmInfos = await cursor.algorithm.getList(projectId)
       const algorithms = algorithmInfos.map(Algorithm)
       return algorithms
@@ -31,7 +30,7 @@ export function Service (dataAccess) {
       for (const key of Object.keys(algorithm)) {
         if (typeof data[key] !== 'undefined') algorithm[key] = data[key]
       }
-      const algorithmInfoUpdated = await dataAccess.algorithm.update(algorithm)
+      const algorithmInfoUpdated = await cursor.algorithm.update(algorithm)
       const algorithmUpdated = Algorithm(algorithmInfoUpdated)
       return algorithmUpdated
     },
