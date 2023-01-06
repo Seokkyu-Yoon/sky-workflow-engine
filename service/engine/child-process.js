@@ -1,12 +1,13 @@
 import { spawn } from 'node:child_process'
-
+import * as status from './status.js'
 export function ChildProcess (spec) {
+  let stopped = false
   let childProcess = null
   return {
     run: () => new Promise((resolve, reject) => {
       let err = null
       try {
-        childProcess = spawn('python', [])
+        childProcess = spawnPython(spec)
         childProcess.stderr.on('data', data => {
           err = new Error(data.toString())
         })
@@ -14,16 +15,22 @@ export function ChildProcess (spec) {
           console.log(data.toString())
         })
         childProcess.on('exit', code => {
-          code === 0 ? resolve() : reject(err)
+          console.log('********************* stopped')
+          if (stopped) return resolve({ status: status.STOPPED })
+          if (code !== 0) return reject(err)
+          resolve({ status: status.FINISHED })
         })
-        childProcess.stdin.write(spec)
+        childProcess.stdin.write(JSON.stringify(spec, null, 2))
         childProcess.stdin.end()
       } catch (err) {
         reject(err)
       }
     }),
     stop: () => {
-      if (childProcess && !childProcess.killed) childProcess.kill()
+      if (childProcess && !childProcess.killed) {
+        stopped = true
+        childProcess.kill()
+      }
     }
   }
 }
@@ -31,15 +38,37 @@ ChildProcess.Dummy = function (spec) {
   let childProcess = null
   return {
     run: () => new Promise((resolve, reject) => {
-      const ms = spec.ms
-      childProcess = setTimeout(() => {
-        if (Math.random() < 0.2) {
-          reject(new Error('random value lose than 0.2'))
-          return
-        }
-        resolve()
-      }, ms)
+      let err = null
+      try {
+        childProcess = spawnDummy(spec)
+        childProcess.stderr.on('data', data => {
+          err = new Error(data.toString())
+        })
+        childProcess.stdout.on('data', data => {
+          console.log(data.toString())
+        })
+        childProcess.on('exit', code => {
+          if (code !== 0) return reject(err)
+          resolve()
+        })
+        childProcess.stdin.write(JSON.stringify(spec, null, 2))
+        childProcess.stdin.end()
+      } catch (err) {
+        reject(err)
+      }
     }),
-    stop: () => clearTimeout(childProcess)
+    stop: () => new Promise((resolve) => {
+      if (childProcess && !childProcess.killed) {
+        resolve(childProcess.kill())
+        return
+      }
+      resolve()
+    })
   }
+}
+function spawnPython (spec) {
+  return spawn('python', [])
+}
+function spawnDummy () {
+  return spawn('node', [`${process.env.WORKFLOW_STORAGE}/public/algorithm/dummy.js`])
 }

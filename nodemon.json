@@ -6,7 +6,8 @@
     "public",
     "ecosystem.config.js",
     "eslintrc.js",
-    "jest.config.js"
+    "jest.config.js",
+    "workflow-storage"
   ],
   "env": {
     "PORT": 18830

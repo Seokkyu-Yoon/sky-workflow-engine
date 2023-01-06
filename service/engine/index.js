@@ -18,12 +18,11 @@ export function Service (dataAccess) {
       runEngine(dataAccess, engine)
       return engine.id
     },
-    // stop: engineId => {
-    //   const engine = engineMap.get(engineId) || null
-    //   if (engine === null) throw new Error('engine is null')
-    //   if (engine.status !== 'running') throw new Error('engine already stopped')
-    //   stopEngine(engine)
-    // },
+    stop: async engineId => {
+      const engine = engineMap.get(engineId) || null
+      await stopEngine(engine)
+      return engine.runner.status(true)
+    },
     status: engineId => {
       const engine = engineMap.get(engineId) || null
       if (engine === null) throw new Error('engine is not found')
@@ -42,7 +41,7 @@ function EngineRunnableChecker (workflowEngineMap, engineMap) {
     const engine = engineMap.get(engineId) || null
     if (engine === null) return // 기존 엔진 정보 확인 불가로 재실행
     if (engine.runner === null) return // 실행 정보 없음
-    if (engine.runner.status() === 'running') throw new Error(`engine already running (${engineId})`) // 엔진 실행 중
+    if (engine.runner.isRunning()) throw new Error(`engine already running (${engineId})`) // 엔진 실행 중
   }
 }
 function EngineDispenser (workflowEngineMap, engineMap) {
@@ -58,4 +57,9 @@ function EngineDispenser (workflowEngineMap, engineMap) {
 function runEngine (dataAccess, engine) {
   engine.runner = Runner(dataAccess, engine)
   engine.runner.run()
+}
+function stopEngine (engine) {
+  if (engine.runner === null) throw new Error('engine does not run anytime')
+  if (!engine.runner.isRunning()) throw new Error('engine is not running now')
+  return engine.runner.stop()
 }

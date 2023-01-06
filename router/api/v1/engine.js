@@ -3,7 +3,9 @@ export function Router (Router, controller) {
 
   router
     .post('/', controller.run)
+
+  router
     .get('/:id', controller.status)
-    // .delete('/:id', controller.stop)
+    .post('/:id', controller.stop)
   return router
 }

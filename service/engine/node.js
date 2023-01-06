@@ -28,19 +28,19 @@ export function Node ({ id, algorithmId, inPorts, outPorts, parameters }) {
       try {
         logger.debug(`* run node[${id}] finish after ${ms}ms`)
         childProcess = ChildProcess.Dummy(spec)
-        await childProcess.run()
-        nodeStatus = status.FINISHED
+        const { status: resStatus } = await childProcess.run()
+        nodeStatus = resStatus
       } catch (err) {
+        if (nodeStatus === status.STOPPED) return
         nodeStatus = status.ERROR
         throw err
       } finally {
         logger.debug(`* node[${id}](status: ${status.getName(nodeStatus)})`)
       }
     },
-    stop: () => {
+    stop: async () => {
       if (nodeStatus !== status.RUNNING) return
-      //  [TODO] kill process
-      childProcess.stop()
+      await childProcess.stop()
       nodeStatus = status.STOPPED
     },
     isRunning: () => nodeStatus === status.RUNNING,

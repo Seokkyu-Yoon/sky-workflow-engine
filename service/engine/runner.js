@@ -27,18 +27,28 @@ export function Runner (dataAccess, { nodes, links }) {
         isDone = isDone && !node.isRunning()
         if (!node.isRunnable()) continue
         isDone = false
-        node.run(dataAccess).then(() => runner.run(errors)).catch(err => errors.push(err.message))
+        node.run(dataAccess).catch(err => errors.push(err?.message)).finally(() => runner.run(errors))
       }
 
       if (!isDone) return
 
+      let newStatus = status.FINISHED
       for (const node of nodeMap.values()) {
-        if (node.status() !== status.FINISHED) {
-          engineStatus = status.ERROR
-          return
+        const nodeStatus = node.status()
+        if (nodeStatus === status.FINISHED) continue
+        if (nodeStatus === status.STOPPED) {
+          newStatus = status.STOPPED
+          break
         }
+        newStatus = status.ERROR
       }
-      engineStatus = status.FINISHED
+      engineStatus = newStatus
+    },
+    stop: async () => {
+      for (const node of nodeMap.values()) {
+        await node.stop()
+      }
+      engineStatus = status.STOPPED
     },
     status: (showOptionals = false) => {
       const engine = status.getName(engineStatus)
@@ -56,6 +66,9 @@ export function Runner (dataAccess, { nodes, links }) {
         nodes,
         ...(engineStatus === status.ERROR && { errors })
       }
+    },
+    isRunning () {
+      return engineStatus === status.RUNNING
     }
   }
   return runner
