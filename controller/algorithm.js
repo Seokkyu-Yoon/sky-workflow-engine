@@ -6,7 +6,8 @@ export function Controller (make, service) {
       res.send(result)
     }),
     getList: make(async (req, res) => {
-      const result = await service.algorithm.getList()
+      const { project_id: projectId = null } = req.query
+      const result = await service.algorithm.getList(projectId)
       res.send(result)
     }),
     get: make(async (req, res) => {

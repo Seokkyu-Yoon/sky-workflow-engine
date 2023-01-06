@@ -1,5 +1,6 @@
-import { Engine } from '../../model/index.js'
 import { logger } from '../../module/index.js'
+
+import { Engine } from '../../model/index.js'
 import { Runner } from './runner.js'
 
 export function Service (dataAccess) {
@@ -26,7 +27,7 @@ export function Service (dataAccess) {
     status: engineId => {
       const engine = engineMap.get(engineId) || null
       if (engine === null) throw new Error('engine is not found')
-      return engine.runner.get()
+      return engine.runner.status(true)
     }
   }
 }
@@ -54,7 +55,7 @@ function EngineDispenser (workflowEngineMap, engineMap) {
     return engine
   }
 }
-async function runEngine (dataAccess, engine) {
+function runEngine (dataAccess, engine) {
   engine.runner = Runner(dataAccess, engine)
   engine.runner.run()
 }
