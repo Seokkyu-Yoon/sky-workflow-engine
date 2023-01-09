@@ -11,6 +11,6 @@ export function Router (Router, controller) {
     .use('/workflows', Workflow(Router, controller.workflow))
     .use('/algorithms', Algorithm(Router, controller.algorithm))
     .use('/engines', Engine(Router, controller.engine))
-    // .use('/files', File(Router, controller.file))
+    .use('/files', File(Router, controller.file))
   return router
 }

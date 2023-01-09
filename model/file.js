@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid'
 
-import { logger } from '../module'
+import { logger } from '../module/index.js'
 
 export function Model (fileInfo) {
   if (fileInfo === null) throw new Error('fileInfo is empty')

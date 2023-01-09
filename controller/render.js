@@ -1,4 +1,4 @@
-export function Controller (make, service) {
+export function Controller (make) {
   return {
     send: make((req, res, next) => {
       const filename = 'index.html'

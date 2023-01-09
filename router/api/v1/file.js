@@ -3,10 +3,10 @@ export function Router (Router, controller) {
 
   router
     .post('/', controller.add)
-    .get('/', controller.getList)
+  //   .get('/', controller.getList)
 
-  router
-    .get('/:id', controller.get)
-    .delete('/:id', controller.delete)
+  // router
+  //   .get('/:id', controller.get)
+  //   .delete('/:id', controller.delete)
   return router
 }

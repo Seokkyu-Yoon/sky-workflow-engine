@@ -1,6 +1,6 @@
 import createError from 'http-errors'
 
-export function Controller (make, service) {
+export function Controller (make) {
   return {
     get: (err, req, res, next) => {
       console.log(err)

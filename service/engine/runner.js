@@ -1,5 +1,3 @@
-import { logger } from '../../module/index.js'
-
 import * as status from './status.js'
 import { Node, VirtualNode } from './node.js'
 
