@@ -11,7 +11,7 @@ export function Model (fileInfo) {
   const workflowId = fileInfo?.workflowId || null
   const name = fileInfo?.name || null
   const extension = fileInfo?.extension || null
-  const size = fileInfo?.size || null
+  const size = fileInfo?.size || 0
 
   return {
     id,

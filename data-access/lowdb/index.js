@@ -3,8 +3,9 @@ import { JSONFile, Low } from 'lowdb'
 import { config } from './config.js'
 import { Project } from './project.js'
 import { Workflow } from './workflow.js'
-import { Cell } from './cell.js'
 import { Algorithm } from './algorithm.js'
+import { File } from './file.js'
+
 import { logger } from '../../module/index.js'
 
 export function LowDb () {
@@ -28,8 +29,8 @@ export function LowDb () {
     return {
       project: Project(lowdb),
       workflow: Workflow(lowdb),
-      cell: Cell(lowdb),
-      algorithm: Algorithm(lowdb)
+      algorithm: Algorithm(lowdb),
+      file: File(lowdb)
     }
   }
 }
