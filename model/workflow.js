@@ -11,12 +11,14 @@ export function Model (workflowInfo) {
   const name = workflowInfo?.name || null
   const description = workflowInfo?.description || null
   const uiSchema = workflowInfo?.uiSchema || null
+  const spec = workflowInfo?.spec || null
 
   return {
     id,
     projectId,
     name,
     description,
-    uiSchema
+    uiSchema,
+    spec
   }
 }
