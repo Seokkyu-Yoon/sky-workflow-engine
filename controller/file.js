@@ -4,6 +4,7 @@ export function Controller (make, service) {
   return {
     add: make(async (req, res) => {
       const body = await FormData(req)
+      console.log('******************', body)
       const result = await service.add(body)
       res.send(result)
     }),

@@ -1,4 +1,4 @@
-import { createWriteStream, mkdir } from 'node:fs'
+import { createWriteStream, mkdir, unlink } from 'node:fs'
 import { resolve } from 'node:path'
 import { File } from '../model/index.js'
 
@@ -24,6 +24,11 @@ function upload (filepath, stream) {
     stream.pipe(writeStream)
       .on('error', err => reject(err))
       .on('finish', () => resolve())
+  })
+}
+function rmFile (filepath) {
+  return new Promise((resolve, reject) => {
+    unlink(filepath, err => err ? reject(err) : resolve())
   })
 }
 
@@ -70,10 +75,13 @@ export function Service (dataAccess) {
       const cursor = await dataAccess.connect()
       const fileInfo = await cursor.file.get(id)
       const file = File(fileInfo)
-      return false
+
+      const dirpath = getDirPath(file)
+      const filepath = getFilePath(file, dirpath)
+      await rmFile(filepath)
       // [TODO] remove file
-      // const deleted = await cursor.file.delete(id)
-      // return deleted
+      const deleted = await cursor.file.delete(id)
+      return deleted
     }
   }
 }
