@@ -1,46 +1,19 @@
+import { resolve } from 'node:path'
 import { spawn } from 'node:child_process'
-import * as status from './status.js'
-export function ChildProcess (spec) {
-  let stopped = false
+
+export function ChildProcess (algorithm, spec) {
   let childProcess = null
   return {
     run: () => new Promise((resolve, reject) => {
       let err = null
       try {
-        childProcess = spawnPython(spec)
-        childProcess.stderr.on('data', data => {
-          err = new Error(data.toString())
-        })
-        childProcess.stdout.on('data', data => {
-          console.log(data.toString())
-        })
-        childProcess.on('exit', code => {
-          console.log('********************* stopped')
-          if (stopped) return resolve({ status: status.STOPPED })
-          if (code !== 0) return reject(err)
-          resolve({ status: status.FINISHED })
-        })
-        childProcess.stdin.write(JSON.stringify(spec, null, 2))
-        childProcess.stdin.end()
-      } catch (err) {
-        reject(err)
-      }
-    }),
-    stop: () => {
-      if (childProcess && !childProcess.killed) {
-        stopped = true
-        childProcess.kill()
-      }
-    }
-  }
-}
-ChildProcess.Dummy = function (spec) {
-  let childProcess = null
-  return {
-    run: () => new Promise((resolve, reject) => {
-      let err = null
-      try {
-        childProcess = spawnDummy(spec)
+        // childProcess = spawnPython(spec)
+        // for test
+        if (algorithm?.type === 'python') {
+          childProcess = spawnPython(algorithm, spec)
+        } else {
+          childProcess = spawnDummy(algorithm, spec)
+        }
         childProcess.stderr.on('data', data => {
           err = new Error(data.toString())
         })
@@ -57,18 +30,16 @@ ChildProcess.Dummy = function (spec) {
         reject(err)
       }
     }),
-    stop: () => new Promise((resolve) => {
+    stop: () => {
       if (childProcess && !childProcess.killed) {
-        resolve(childProcess.kill())
-        return
+        childProcess.kill()
       }
-      resolve()
-    })
+    }
   }
 }
-function spawnPython (spec) {
-  return spawn('python', [])
+function spawnPython (algorithm, spec) {
+  return spawn('python', [resolve(process.env.WORKFLOW_STORAGE, 'public', 'algorithm', `${algorithm.id}.py`)])
 }
-function spawnDummy () {
-  return spawn('node', [`${process.env.WORKFLOW_STORAGE}/public/algorithm/dummy.js`])
+function spawnDummy (algorithm, spec) {
+  return spawn('node', [resolve(process.env.WORKFLOW_STORAGE, 'public', 'algorithm', 'dummy.js')])
 }

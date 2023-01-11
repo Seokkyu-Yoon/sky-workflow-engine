@@ -7,6 +7,7 @@ export function Model (spec) {
   // [TODO] check engineInfo
   logger.debug(spec)
   const id = uuidv4()
+  const projectId = spec?.projectId
   const workflowId = spec?.workflowId
   const nodes = spec?.nodes
   const links = spec?.links
@@ -14,6 +15,7 @@ export function Model (spec) {
 
   return {
     id,
+    projectId,
     workflowId,
     nodes,
     links,

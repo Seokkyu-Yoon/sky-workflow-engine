@@ -1,6 +1,6 @@
 import { logger } from '../../module/index.js'
 
-import { Engine } from '../../model/index.js'
+import { Engine, Workflow } from '../../model/index.js'
 import { Runner } from './runner.js'
 
 export function Service (dataAccess) {
@@ -11,10 +11,12 @@ export function Service (dataAccess) {
   const createEngine = EngineDispenser(workflowEngineMap, engineMap)
 
   return {
-    run: spec => {
-      // logger.debug(spec)
+    run: async spec => {
       checkRunnable(spec)
-      const engine = createEngine(spec)
+      const cursor = await dataAccess.connect()
+      const workflowInfo = await cursor.workflow.get(spec.workflowId)
+      const workflow = Workflow(workflowInfo)
+      const engine = createEngine({ ...spec, projectId: workflow.projectId })
       runEngine(dataAccess, engine)
       return engine.id
     },
@@ -27,6 +29,9 @@ export function Service (dataAccess) {
       const engine = engineMap.get(engineId) || null
       if (engine === null) throw new Error('engine is not found')
       return engine.runner.status(true)
+    },
+    get: workflowId => {
+      return workflowEngineMap.get(workflowId) || null
     }
   }
 }

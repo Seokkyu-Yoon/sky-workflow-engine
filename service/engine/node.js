@@ -3,7 +3,7 @@ import { logger } from '../../module/index.js'
 import * as status from './status.js'
 import { ChildProcess } from './child-process.js'
 
-export function Node ({ id, algorithmId, inPorts, outPorts, parameters }) {
+export function Node ({ id, projectId, workflowId, algorithmId, inPorts, outPorts, parameters }) {
   let nodeStatus = status.READY
   let childProcess = null
   const preNodes = new Set()
@@ -15,27 +15,23 @@ export function Node ({ id, algorithmId, inPorts, outPorts, parameters }) {
     run: async (dataAccess) => {
       if (nodeStatus === status.RUNNING) throw new Error('already running')
       nodeStatus = status.RUNNING
-      // [TODO] read algorithm info
       const cursor = await dataAccess.connect()
       const algorithm = await cursor.algorithm.get(algorithmId)
-      // [TODO] spawn algorithm and rebuild spec to run algorithm
 
+      // [TODO] spawn algorithm and rebuild spec to run algorithm
+      // const spec = processSpec({ id, algorithm, inPorts, outPorts, parameters })
       // for test
-      const minMs = 5000
-      const maxMs = 15000
-      const ms = Math.floor(Math.random() * (maxMs - minMs)) + minMs
-      const spec = { ms }
+      // const spec = processTestSpec({ id, projectId, workflowId, algorithm, inPorts, outPorts, parameters }, inPortMap)
+      const spec = processSpec({ id, projectId, workflowId, algorithm, inPorts, outPorts, parameters }, inPortMap)
+
       try {
-        logger.debug(`* run node[${id}] finish after ${ms}ms`)
-        childProcess = ChildProcess.Dummy(spec)
-        const { status: resStatus } = await childProcess.run()
-        nodeStatus = resStatus
+        childProcess = ChildProcess(algorithm, spec)
+        await childProcess.run()
+        nodeStatus = status.FINISHED
       } catch (err) {
         if (nodeStatus === status.STOPPED) return
         nodeStatus = status.ERROR
         throw err
-      } finally {
-        logger.debug(`* node[${id}](status: ${status.getName(nodeStatus)})`)
       }
     },
     stop: async () => {
@@ -66,4 +62,31 @@ export function VirtualNode (id) {
     id,
     status: () => nodeStatus
   }
+}
+
+function processSpec ({ id, projectId, workflowId, inPorts, outPorts, parameters }, inPortMap) {
+  const spec = {
+    id,
+    env: {
+      projectId,
+      workflowId,
+      storagePath: process.env.WORKFLOW_STORAGE
+    },
+    inputs: inPorts.map(inPortId => {
+      const { node, port } = inPortMap.get(inPortId) || {}
+      return `${node}.${port}`
+    }),
+    outputs: outPorts,
+    params: parameters.reduce((bucket, { key, value }) => {
+      bucket[key] = value
+      return bucket
+    }, {})
+  }
+  return spec
+}
+function processTestSpec () {
+  const minMs = 5000
+  const maxMs = 15000
+  const ms = Math.floor(Math.random() * (maxMs - minMs)) + minMs
+  return { ms }
 }

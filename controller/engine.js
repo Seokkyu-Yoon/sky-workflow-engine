@@ -1,7 +1,7 @@
 export function Controller (make, service) {
   return {
-    run: make((req, res) => {
-      const result = service.run(req.body)
+    run: make(async (req, res) => {
+      const result = await service.run(req.body)
       res.send(result)
     }),
     stop: make(async (req, res) => {
@@ -12,6 +12,11 @@ export function Controller (make, service) {
     status: make((req, res) => {
       const { id } = req.params
       const result = service.status(id)
+      res.send(result)
+    }),
+    get: make((req, res) => {
+      const { id } = req.params
+      const result = service.get(id)
       res.send(result)
     })
   }

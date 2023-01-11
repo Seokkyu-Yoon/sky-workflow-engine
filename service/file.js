@@ -18,10 +18,11 @@ function makeDir (dirpath) {
     mkdir(dirpath, { recursive: true }, err => err ? reject(err) : resolve())
   })
 }
-function upload (filepath, stream) {
-  const writeStream = createWriteStream(filepath, { flags: 'w' })
+
+function upload (filepath, readableStream) {
+  const writableStream = createWriteStream(filepath, { flags: 'w' })
   return new Promise((resolve, reject) => {
-    stream.pipe(writeStream)
+    readableStream.pipe(writableStream)
       .on('error', err => reject(err))
       .on('finish', () => resolve())
   })

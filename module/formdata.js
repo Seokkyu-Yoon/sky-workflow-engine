@@ -22,10 +22,7 @@ export function FormData (req) {
           stream
             .on('error', err => reject(err))
             .on('close', () => value.push(null, 'utf-8'))
-            .on('data', chunk => {
-              console.log(chunk.toString())
-              value.push(chunk, 'utf-8')
-            })
+            .on('data', chunk => value.push(chunk, 'utf-8'))
 
           formBody[name] = {
             filename: info?.filename || '',
@@ -34,7 +31,6 @@ export function FormData (req) {
         })
       req.pipe(busboy)
     } catch (err) {
-      console.error(err)
       reject(err)
     }
   })
