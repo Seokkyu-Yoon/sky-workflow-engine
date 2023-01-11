@@ -1,6 +1,5 @@
 node_modules
-
 .env
-public
-workflow-storage
-logs
+/public
+/workflow-storage
+/logs
