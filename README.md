@@ -25,8 +25,12 @@ If you want to change directory, than write STORAGE_PATH={{wanna be path}} to .e
 ├│└
 ```
 
-## Environment
-Using dotenv that set port and storage path
+## Postman
+add environment
+```
+workflow-backend-ip
+workflow-backend-port
+```
 
 
 ## Run server

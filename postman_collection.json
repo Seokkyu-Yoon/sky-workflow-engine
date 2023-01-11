@@ -1,0 +1,1482 @@
+{
+	"info": {
+		"_postman_id": "663cc208-c3a3-413f-a5b3-ec3bfc5dd496",
+		"name": "Workflow",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6397810"
+	},
+	"item": [
+		{
+			"name": "Project",
+			"item": [
+				{
+					"name": "add",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('add project', () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.globals.set(\"project_id\", pm.response.json().id);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"test1\",\r\n    \"description\": \"test1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{workflow-backend-ip}}:{{workflow-backend-port}}/api/v1/projects",
+							"protocol": "http",
+							"host": [
+								"{{workflow-backend-ip}}"
+							],
+							"port": "{{workflow-backend-port}}",
+							"path": [
+								"api",
+								"v1",
+								"projects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('get project', () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.globals.set(\"project_id\", pm.response.json().id);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{workflow-backend-ip}}:{{workflow-backend-port}}/api/v1/projects/{{project_id}}",
+							"protocol": "http",
+							"host": [
+								"{{workflow-backend-ip}}"
+							],
+							"port": "{{workflow-backend-port}}",
+							"path": [
+								"api",
+								"v1",
+								"projects",
+								"{{project_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('delete project', () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.globals.unset(\"project_id\")\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{workflow-backend-ip}}:{{workflow-backend-port}}/api/v1/projects/{{project_id}}",
+							"protocol": "http",
+							"host": [
+								"{{workflow-backend-ip}}"
+							],
+							"port": "{{workflow-backend-port}}",
+							"path": [
+								"api",
+								"v1",
+								"projects",
+								"{{project_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('update project', () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.globals.set(\"project_id\", pm.response.json().id);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"test3\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{workflow-backend-ip}}:{{workflow-backend-port}}/api/v1/projects/{{project_id}}",
+							"protocol": "http",
+							"host": [
+								"{{workflow-backend-ip}}"
+							],
+							"port": "{{workflow-backend-port}}",
+							"path": [
+								"api",
+								"v1",
+								"projects",
+								"{{project_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getList",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{workflow-backend-ip}}:{{workflow-backend-port}}/api/v1/projects",
+							"protocol": "http",
+							"host": [
+								"{{workflow-backend-ip}}"
+							],
+							"port": "{{workflow-backend-port}}",
+							"path": [
+								"api",
+								"v1",
+								"projects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getWorkflows",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{workflow-backend-ip}}:{{workflow-backend-port}}/api/v1/projects/{{project_id}}/workflows",
+							"protocol": "http",
+							"host": [
+								"{{workflow-backend-ip}}"
+							],
+							"port": "{{workflow-backend-port}}",
+							"path": [
+								"api",
+								"v1",
+								"projects",
+								"{{project_id}}",
+								"workflows"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getCells",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{workflow-backend-ip}}:{{workflow-backend-port}}/api/v1/projects/{{project_id}}/cells",
+							"protocol": "http",
+							"host": [
+								"{{workflow-backend-ip}}"
+							],
+							"port": "{{workflow-backend-port}}",
+							"path": [
+								"api",
+								"v1",
+								"projects",
+								"{{project_id}}",
+								"cells"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Algorithm",
+			"item": [
+				{
+					"name": "add",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('add cell', () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.globals.set(\"algorithm_id\", pm.response.json().id);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"error-id\",\r\n    \"name\": \"error\",\r\n    \"type\": \"python\",\r\n    \"projectId\": null,\r\n    \"description\": \"무조건 에러를 출력하는 알고리즘\",\r\n    \"inputs\": [\r\n        {\r\n            \"id\": \"in1\",\r\n            \"name\": \"input csv data\"\r\n        }\r\n    ],\r\n    \"outputs\": [\r\n        {\r\n            \"id\": \"out1\",\r\n            \"name\": \"output csv data\"\r\n        }\r\n    ],\r\n    \"params\": [\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{workflow-backend-ip}}:{{workflow-backend-port}}/api/v1/algorithms",
+							"protocol": "http",
+							"host": [
+								"{{workflow-backend-ip}}"
+							],
+							"port": "{{workflow-backend-port}}",
+							"path": [
+								"api",
+								"v1",
+								"algorithms"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('get cell', () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.globals.set(\"algorithm_id\", pm.response.json().id);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{workflow-backend-ip}}:{{workflow-backend-port}}/api/v1/algorithms/{{algorithm_id}}",
+							"protocol": "http",
+							"host": [
+								"{{workflow-backend-ip}}"
+							],
+							"port": "{{workflow-backend-port}}",
+							"path": [
+								"api",
+								"v1",
+								"algorithms",
+								"{{algorithm_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('delete cell', () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.globals.unset(\"cell_id\")\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{workflow-backend-ip}}:{{workflow-backend-port}}/api/v1/algorithms/{{algorithm_id}}",
+							"protocol": "http",
+							"host": [
+								"{{workflow-backend-ip}}"
+							],
+							"port": "{{workflow-backend-port}}",
+							"path": [
+								"api",
+								"v1",
+								"algorithms",
+								"{{algorithm_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('update cell', () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.globals.set(\"cell_id\", pm.response.json().id);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"test1\",\r\n    \"description\": \"test2\",\r\n    \"outputs\": null\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{workflow-backend-ip}}:{{workflow-backend-port}}/api/v1/algorithms/{{algorithm_id}}",
+							"protocol": "http",
+							"host": [
+								"{{workflow-backend-ip}}"
+							],
+							"port": "{{workflow-backend-port}}",
+							"path": [
+								"api",
+								"v1",
+								"algorithms",
+								"{{algorithm_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getList",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{workflow-backend-ip}}:{{workflow-backend-port}}/api/v1/algorithms",
+							"protocol": "http",
+							"host": [
+								"{{workflow-backend-ip}}"
+							],
+							"port": "{{workflow-backend-port}}",
+							"path": [
+								"api",
+								"v1",
+								"algorithms"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "all list",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{workflow-backend-ip}}:{{workflow-backend-port}}/api/v1/algorithms",
+									"protocol": "http",
+									"host": [
+										"{{workflow-backend-ip}}"
+									],
+									"port": "{{workflow-backend-port}}",
+									"path": [
+										"api",
+										"v1",
+										"algorithms"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "in project",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{workflow-backend-ip}}:{{workflow-backend-port}}/api/v1/algorithms?project_id=TEST02",
+									"protocol": "http",
+									"host": [
+										"{{workflow-backend-ip}}"
+									],
+									"port": "{{workflow-backend-port}}",
+									"path": [
+										"api",
+										"v1",
+										"algorithms"
+									],
+									"query": [
+										{
+											"key": "project_id",
+											"value": "TEST02"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Workflow",
+			"item": [
+				{
+					"name": "add",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('add workflow', () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.globals.set(\"workflow_id\", pm.response.json().id)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"projectId\": \"b44d75e5-c3fa-4442-b65f-d2c30d191904\",\r\n    \"name\": \"test1\",\r\n    \"description\": \"test1\",\r\n    \"uiSchema\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{workflow-backend-ip}}:{{workflow-backend-port}}/api/v1/workflows",
+							"protocol": "http",
+							"host": [
+								"{{workflow-backend-ip}}"
+							],
+							"port": "{{workflow-backend-port}}",
+							"path": [
+								"api",
+								"v1",
+								"workflows"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('get workflow', () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.globals.set(\"workflow_id\", pm.response.json().id)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{workflow-backend-ip}}:{{workflow-backend-port}}/api/v1/workflows/{{workflow_id}}",
+							"protocol": "http",
+							"host": [
+								"{{workflow-backend-ip}}"
+							],
+							"port": "{{workflow-backend-port}}",
+							"path": [
+								"api",
+								"v1",
+								"workflows",
+								"{{workflow_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('delete workflow', () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.globals.unset(\"workflow_id\")\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{workflow-backend-ip}}:{{workflow-backend-port}}/api/v1/workflows/{{workflow_id}}",
+							"protocol": "http",
+							"host": [
+								"{{workflow-backend-ip}}"
+							],
+							"port": "{{workflow-backend-port}}",
+							"path": [
+								"api",
+								"v1",
+								"workflows",
+								"{{workflow_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('update workflow', () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.globals.set(\"workflow_id\", pm.response.json().id)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"uiSchema\": {\r\n        \"test\": [\r\n            \"tt11\"\r\n        ]\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{workflow-backend-ip}}:{{workflow-backend-port}}/api/v1/workflows/{{workflow_id}}",
+							"protocol": "http",
+							"host": [
+								"{{workflow-backend-ip}}"
+							],
+							"port": "{{workflow-backend-port}}",
+							"path": [
+								"api",
+								"v1",
+								"workflows",
+								"{{workflow_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getList",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{workflow-backend-ip}}:{{workflow-backend-port}}/api/v1/workflows",
+							"protocol": "http",
+							"host": [
+								"{{workflow-backend-ip}}"
+							],
+							"port": "{{workflow-backend-port}}",
+							"path": [
+								"api",
+								"v1",
+								"workflows"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "all list",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{workflow-backend-ip}}:{{workflow-backend-port}}/api/v1/workflows",
+									"protocol": "http",
+									"host": [
+										"{{workflow-backend-ip}}"
+									],
+									"port": "{{workflow-backend-port}}",
+									"path": [
+										"api",
+										"v1",
+										"workflows"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "in project",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{workflow-backend-ip}}:{{workflow-backend-port}}/api/v1/workflows?project_id=b44d75e5-c3fa-4442-b65f-d2c30d191904",
+									"protocol": "http",
+									"host": [
+										"{{workflow-backend-ip}}"
+									],
+									"port": "{{workflow-backend-port}}",
+									"path": [
+										"api",
+										"v1",
+										"workflows"
+									],
+									"query": [
+										{
+											"key": "project_id",
+											"value": "b44d75e5-c3fa-4442-b65f-d2c30d191904"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Engine",
+			"item": [
+				{
+					"name": "run",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('run engine', () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.globals.set(\"engine_id\", pm.response.text())\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"workflowId\": \"workflow-test-1\",\r\n    \"nodes\": [\r\n        {\r\n            \"id\": \"node-loader-1\",\r\n            \"algorithmId\": \"data-loader-id\",\r\n            \"inPorts\": [],\r\n            \"outPorts\": [\r\n                \"out1\"\r\n            ],\r\n            \"parameters\": [\r\n                {\r\n                    \"type\": \"file\",\r\n                    \"key\": \"file\",\r\n                    \"value\": \"file-test-1\"\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"id\": \"node-sum-1\",\r\n            \"algorithmId\": \"sum-id\",\r\n            \"inPorts\": [\r\n                \"in1\"\r\n            ],\r\n            \"outPorts\": [\r\n                \"out1\"\r\n            ],\r\n            \"parameters\": [\r\n                {\r\n                    \"type\": \"number\",\r\n                    \"key\": \"value\",\r\n                    \"value\": 1\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"id\": \"node-sum-2\",\r\n            \"algorithmId\": \"sum-id\",\r\n            \"inPorts\": [\r\n                \"in1\"\r\n            ],\r\n            \"outPorts\": [\r\n                \"out1\"\r\n            ],\r\n            \"parameters\": [\r\n                {\r\n                    \"type\": \"number\",\r\n                    \"key\": \"value\",\r\n                    \"value\": 10\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"id\": \"node-delay-1\",\r\n            \"algorithmId\": \"delay-id\",\r\n            \"inPorts\": [\r\n                \"in1\"\r\n            ],\r\n            \"outPorts\": [\r\n                \"out1\"\r\n            ],\r\n            \"parameters\": [\r\n                {\r\n                    \"type\": \"number\",\r\n                    \"key\": \"value\",\r\n                    \"value\": 10\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"id\": \"node-delay-2\",\r\n            \"algorithmId\": \"delay-id\",\r\n            \"inPorts\": [\r\n                \"in1\"\r\n            ],\r\n            \"outPorts\": [\r\n                \"out1\"\r\n            ],\r\n            \"parameters\": [\r\n                {\r\n                    \"type\": \"number\",\r\n                    \"key\": \"value\",\r\n                    \"value\": 5\r\n                }\r\n            ]\r\n        }\r\n    ],\r\n    \"links\": [\r\n        {\r\n            \"src\": {\r\n                \"node\": \"node-loader-1\",\r\n                \"port\": \"out1\"\r\n            },\r\n            \"tar\": {\r\n                \"node\": \"node-delay-1\",\r\n                \"port\": \"in1\"\r\n            }\r\n        },\r\n        {\r\n            \"src\": {\r\n                \"node\": \"node-delay-1\",\r\n                \"port\": \"out1\"\r\n            },\r\n            \"tar\": {\r\n                \"node\": \"node-sum-1\",\r\n                \"port\": \"in1\"\r\n            }\r\n        },\r\n        {\r\n            \"src\": {\r\n                \"node\": \"node-sum-1\",\r\n                \"port\": \"out1\"\r\n            },\r\n            \"tar\": {\r\n                \"node\": \"node-delay-2\",\r\n                \"port\": \"in1\"\r\n            }\r\n        },\r\n        {\r\n            \"src\": {\r\n                \"node\": \"node-delay-2\",\r\n                \"port\": \"out1\"\r\n            },\r\n            \"tar\": {\r\n                \"node\": \"node-sum-2\",\r\n                \"port\": \"in1\"\r\n            }\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{workflow-backend-ip}}:{{workflow-backend-port}}/api/v1/engines",
+							"protocol": "http",
+							"host": [
+								"{{workflow-backend-ip}}"
+							],
+							"port": "{{workflow-backend-port}}",
+							"path": [
+								"api",
+								"v1",
+								"engines"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "basic-example",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"workflowId\": \"workflow-test-1\",\r\n    \"nodes\": [\r\n        {\r\n            \"id\": \"node-loader-1\",\r\n            \"algorithmId\": \"data-loader-id\",\r\n            \"inPorts\": [],\r\n            \"outPorts\": [\r\n                \"out1\"\r\n            ],\r\n            \"parameters\": [\r\n                {\r\n                    \"type\": \"file\",\r\n                    \"key\": \"file\",\r\n                    \"value\": \"file-test-1\"\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"id\": \"node-sum-1\",\r\n            \"algorithmId\": \"sum-id\",\r\n            \"inPorts\": [\r\n                \"in1\"\r\n            ],\r\n            \"outPorts\": [\r\n                \"out1\"\r\n            ],\r\n            \"parameters\": [\r\n                {\r\n                    \"type\": \"number\",\r\n                    \"key\": \"value\",\r\n                    \"value\": 1\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"id\": \"node-sum-2\",\r\n            \"algorithmId\": \"sum-id\",\r\n            \"inPorts\": [\r\n                \"in1\"\r\n            ],\r\n            \"outPorts\": [\r\n                \"out1\"\r\n            ],\r\n            \"parameters\": [\r\n                {\r\n                    \"type\": \"number\",\r\n                    \"key\": \"value\",\r\n                    \"value\": 10\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"id\": \"node-delay-1\",\r\n            \"algorithmId\": \"delay-id\",\r\n            \"inPorts\": [\r\n                \"in1\"\r\n            ],\r\n            \"outPorts\": [\r\n                \"out1\"\r\n            ],\r\n            \"parameters\": [\r\n                {\r\n                    \"type\": \"number\",\r\n                    \"key\": \"value\",\r\n                    \"value\": 10\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"id\": \"node-delay-2\",\r\n            \"algorithmId\": \"delay-id\",\r\n            \"inPorts\": [\r\n                \"in1\"\r\n            ],\r\n            \"outPorts\": [\r\n                \"out1\"\r\n            ],\r\n            \"parameters\": [\r\n                {\r\n                    \"type\": \"number\",\r\n                    \"key\": \"value\",\r\n                    \"value\": 5\r\n                }\r\n            ]\r\n        }\r\n    ],\r\n    \"links\": [\r\n        {\r\n            \"src\": {\r\n                \"node\": \"node-loader-1\",\r\n                \"port\": \"out1\"\r\n            },\r\n            \"tar\": {\r\n                \"node\": \"node-delay-1\",\r\n                \"port\": \"in1\"\r\n            }\r\n        },\r\n        {\r\n            \"src\": {\r\n                \"node\": \"node-delay-1\",\r\n                \"port\": \"out1\"\r\n            },\r\n            \"tar\": {\r\n                \"node\": \"node-sum-1\",\r\n                \"port\": \"in1\"\r\n            }\r\n        },\r\n        {\r\n            \"src\": {\r\n                \"node\": \"node-sum-1\",\r\n                \"port\": \"out1\"\r\n            },\r\n            \"tar\": {\r\n                \"node\": \"node-delay-2\",\r\n                \"port\": \"in1\"\r\n            }\r\n        },\r\n        {\r\n            \"src\": {\r\n                \"node\": \"node-delay-2\",\r\n                \"port\": \"out1\"\r\n            },\r\n            \"tar\": {\r\n                \"node\": \"node-sum-2\",\r\n                \"port\": \"in1\"\r\n            }\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{workflow-backend-ip}}:{{workflow-backend-port}}/api/v1/engines",
+									"protocol": "http",
+									"host": [
+										"{{workflow-backend-ip}}"
+									],
+									"port": "{{workflow-backend-port}}",
+									"path": [
+										"api",
+										"v1",
+										"engines"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "error-example",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "/* \r\n * 2개의 loader가 존재하고 \r\n * * 1번 loader -> 10초 딜레이 -> 1번 sum(add 1) -> 5초 딜레이 -> 2번 sum(add 10)\r\n * * 2번 loader -> 8초 딜레이 -> 에러 발생 -> 3번 sum(add 100)\r\n * 으로 연결된 것으로 병렬로 동작하며, 한쪽은 에러, 한쪽은 정상 종료 되는 예제\r\n */\r\n{\r\n    \"workflowId\": \"workflow-test-1\",\r\n    \"nodes\": [\r\n        {\r\n            \"id\": \"node-loader-1\",\r\n            \"algorithmId\": \"data-loader-id\",\r\n            \"inPorts\": [],\r\n            \"outPorts\": [\r\n                \"out1\"\r\n            ],\r\n            \"parameters\": [\r\n                {\r\n                    \"type\": \"file\",\r\n                    \"key\": \"file\",\r\n                    \"value\": \"file-test-1\"\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"id\": \"node-loader-2\",\r\n            \"algorithmId\": \"data-loader-id\",\r\n            \"inPorts\": [],\r\n            \"outPorts\": [\r\n                \"out1\"\r\n            ],\r\n            \"parameters\": [\r\n                {\r\n                    \"type\": \"file\",\r\n                    \"key\": \"file\",\r\n                    \"value\": \"file-test-1\"\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"id\": \"node-sum-1\",\r\n            \"algorithmId\": \"sum-id\",\r\n            \"inPorts\": [\r\n                \"in1\"\r\n            ],\r\n            \"outPorts\": [\r\n                \"out1\"\r\n            ],\r\n            \"parameters\": [\r\n                {\r\n                    \"type\": \"number\",\r\n                    \"key\": \"value\",\r\n                    \"value\": 1\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"id\": \"node-sum-2\",\r\n            \"algorithmId\": \"sum-id\",\r\n            \"inPorts\": [\r\n                \"in1\"\r\n            ],\r\n            \"outPorts\": [\r\n                \"out1\"\r\n            ],\r\n            \"parameters\": [\r\n                {\r\n                    \"type\": \"number\",\r\n                    \"key\": \"value\",\r\n                    \"value\": 10\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"id\": \"node-sum-3\",\r\n            \"algorithmId\": \"sum-id\",\r\n            \"inPorts\": [\r\n                \"in1\"\r\n            ],\r\n            \"outPorts\": [\r\n                \"out1\"\r\n            ],\r\n            \"parameters\": [\r\n                {\r\n                    \"type\": \"number\",\r\n                    \"key\": \"value\",\r\n                    \"value\": 100\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"id\": \"node-delay-1\",\r\n            \"algorithmId\": \"delay-id\",\r\n            \"inPorts\": [\r\n                \"in1\"\r\n            ],\r\n            \"outPorts\": [\r\n                \"out1\"\r\n            ],\r\n            \"parameters\": [\r\n                {\r\n                    \"type\": \"number\",\r\n                    \"key\": \"value\",\r\n                    \"value\": 10\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"id\": \"node-delay-2\",\r\n            \"algorithmId\": \"delay-id\",\r\n            \"inPorts\": [\r\n                \"in1\"\r\n            ],\r\n            \"outPorts\": [\r\n                \"out1\"\r\n            ],\r\n            \"parameters\": [\r\n                {\r\n                    \"type\": \"number\",\r\n                    \"key\": \"value\",\r\n                    \"value\": 5\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"id\": \"node-delay-3\",\r\n            \"algorithmId\": \"delay-id\",\r\n            \"inPorts\": [\r\n                \"in1\"\r\n            ],\r\n            \"outPorts\": [\r\n                \"out1\"\r\n            ],\r\n            \"parameters\": [\r\n                {\r\n                    \"type\": \"number\",\r\n                    \"key\": \"value\",\r\n                    \"value\": 8\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"id\": \"node-error-1\",\r\n            \"algorithmId\": \"error-id\",\r\n            \"inPorts\": [\r\n                \"in1\"\r\n            ],\r\n            \"outPorts\": [\r\n                \"out1\"\r\n            ],\r\n            \"parameters\": []\r\n        }\r\n    ],\r\n    \"links\": [\r\n        {\r\n            \"src\": {\r\n                \"node\": \"node-loader-1\",\r\n                \"port\": \"out1\"\r\n            },\r\n            \"tar\": {\r\n                \"node\": \"node-delay-1\",\r\n                \"port\": \"in1\"\r\n            }\r\n        },\r\n        {\r\n            \"src\": {\r\n                \"node\": \"node-delay-1\",\r\n                \"port\": \"out1\"\r\n            },\r\n            \"tar\": {\r\n                \"node\": \"node-sum-1\",\r\n                \"port\": \"in1\"\r\n            }\r\n        },\r\n        {\r\n            \"src\": {\r\n                \"node\": \"node-sum-1\",\r\n                \"port\": \"out1\"\r\n            },\r\n            \"tar\": {\r\n                \"node\": \"node-delay-2\",\r\n                \"port\": \"in1\"\r\n            }\r\n        },\r\n        {\r\n            \"src\": {\r\n                \"node\": \"node-delay-2\",\r\n                \"port\": \"out1\"\r\n            },\r\n            \"tar\": {\r\n                \"node\": \"node-sum-2\",\r\n                \"port\": \"in1\"\r\n            }\r\n        },\r\n        {\r\n            \"src\": {\r\n                \"node\": \"node-loader-2\",\r\n                \"port\": \"out1\"\r\n            },\r\n            \"tar\": {\r\n                \"node\": \"node-delay-3\",\r\n                \"port\": \"in1\"\r\n            }\r\n        },\r\n        {\r\n            \"src\": {\r\n                \"node\": \"node-delay-3\",\r\n                \"port\": \"out1\"\r\n            },\r\n            \"tar\": {\r\n                \"node\": \"node-error-1\",\r\n                \"port\": \"in1\"\r\n            }\r\n        },\r\n        {\r\n            \"src\": {\r\n                \"node\": \"node-error-1\",\r\n                \"port\": \"out1\"\r\n            },\r\n            \"tar\": {\r\n                \"node\": \"node-sum-3\",\r\n                \"port\": \"in1\"\r\n            }\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{workflow-backend-ip}}:{{workflow-backend-port}}/api/v1/engines",
+									"protocol": "http",
+									"host": [
+										"{{workflow-backend-ip}}"
+									],
+									"port": "{{workflow-backend-port}}",
+									"path": [
+										"api",
+										"v1",
+										"engines"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{workflow-backend-ip}}:{{workflow-backend-port}}/api/v1/engines/{{engine_id}}",
+							"protocol": "http",
+							"host": [
+								"{{workflow-backend-ip}}"
+							],
+							"port": "{{workflow-backend-port}}",
+							"path": [
+								"api",
+								"v1",
+								"engines",
+								"{{engine_id}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "status",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"workflowId\": \"workflow1\",\r\n  \"nodes\": [\r\n    {\r\n      \"id\": \"68270133-1cd3-4176-8197-3fd3c4c5c111\",\r\n      \"algorithmId\": \"test\",\r\n      \"inPorts\": [],\r\n      \"outPorts\": [\r\n        \"out1\"\r\n      ],\r\n      \"parameters\": [\r\n        {\r\n          \"type\": \"file\",\r\n          \"key\": \"fileName\",\r\n          \"value\": \"test.csv\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"cf42bd23-bdf1-433f-b72e-ee708aad7247\",\r\n      \"algorithmId\": \"test\",\r\n      \"inPorts\": [\r\n        \"in1\",\r\n        \"in2\"\r\n      ],\r\n      \"outPorts\": [\r\n        \"out1\"\r\n      ],\r\n      \"parameters\": [\r\n        {\r\n          \"type\": \"number\",\r\n          \"key\": \"value\",\r\n          \"value\": 1\r\n        }\r\n      ]\r\n    }\r\n  ],\r\n  \"links\": [\r\n    {\r\n      \"src\": {\r\n        \"node\": \"68270133-1cd3-4176-8197-3fd3c4c5c111\",\r\n        \"port\": \"out1\"\r\n      },\r\n      \"tar\": {\r\n        \"node\": \"cf42bd23-bdf1-433f-b72e-ee708aad7247\",\r\n        \"port\": \"in1\"\r\n      }\r\n    }\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{workflow-backend-ip}}:{{workflow-backend-port}}/api/v1/engines/{{engine_id}}",
+									"protocol": "http",
+									"host": [
+										"{{workflow-backend-ip}}"
+									],
+									"port": "{{workflow-backend-port}}",
+									"path": [
+										"api",
+										"v1",
+										"engines",
+										"{{engine_id}}"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\r\n    \"engine\": \"errored\",\r\n    \"nodes\": {\r\n        \"68270133-1cd3-4176-8197-3fd3c4c5c111\": \"finished\",\r\n        \"cf42bd23-bdf1-433f-b72e-ee708aad7247\": \"errored\"\r\n    },\r\n    \"errored\": [ // if not errored not included\r\n        \"random value lose than 0.3\"\r\n    ]\r\n}"
+						}
+					]
+				},
+				{
+					"name": "stop",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"workflowId\": \"workflow1\",\r\n  \"nodes\": [\r\n    {\r\n      \"id\": \"68270133-1cd3-4176-8197-3fd3c4c5c111\",\r\n      \"algorithmId\": \"test\",\r\n      \"inPorts\": [],\r\n      \"outPorts\": [\r\n        \"out1\"\r\n      ],\r\n      \"parameters\": [\r\n        {\r\n          \"type\": \"file\",\r\n          \"key\": \"fileName\",\r\n          \"value\": \"test.csv\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"cf42bd23-bdf1-433f-b72e-ee708aad7247\",\r\n      \"algorithmId\": \"test\",\r\n      \"inPorts\": [\r\n        \"in1\",\r\n        \"in2\"\r\n      ],\r\n      \"outPorts\": [\r\n        \"out1\"\r\n      ],\r\n      \"parameters\": [\r\n        {\r\n          \"type\": \"number\",\r\n          \"key\": \"value\",\r\n          \"value\": 1\r\n        }\r\n      ]\r\n    }\r\n  ],\r\n  \"links\": [\r\n    {\r\n      \"src\": {\r\n        \"node\": \"68270133-1cd3-4176-8197-3fd3c4c5c111\",\r\n        \"port\": \"out1\"\r\n      },\r\n      \"tar\": {\r\n        \"node\": \"cf42bd23-bdf1-433f-b72e-ee708aad7247\",\r\n        \"port\": \"in1\"\r\n      }\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{workflow-backend-ip}}:{{workflow-backend-port}}/api/v1/engines/{{engine_id}}",
+							"protocol": "http",
+							"host": [
+								"{{workflow-backend-ip}}"
+							],
+							"port": "{{workflow-backend-port}}",
+							"path": [
+								"api",
+								"v1",
+								"engines",
+								"{{engine_id}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "status",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"workflowId\": \"workflow1\",\r\n  \"nodes\": [\r\n    {\r\n      \"id\": \"68270133-1cd3-4176-8197-3fd3c4c5c111\",\r\n      \"algorithmId\": \"test\",\r\n      \"inPorts\": [],\r\n      \"outPorts\": [\r\n        \"out1\"\r\n      ],\r\n      \"parameters\": [\r\n        {\r\n          \"type\": \"file\",\r\n          \"key\": \"fileName\",\r\n          \"value\": \"test.csv\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"cf42bd23-bdf1-433f-b72e-ee708aad7247\",\r\n      \"algorithmId\": \"test\",\r\n      \"inPorts\": [\r\n        \"in1\",\r\n        \"in2\"\r\n      ],\r\n      \"outPorts\": [\r\n        \"out1\"\r\n      ],\r\n      \"parameters\": [\r\n        {\r\n          \"type\": \"number\",\r\n          \"key\": \"value\",\r\n          \"value\": 1\r\n        }\r\n      ]\r\n    }\r\n  ],\r\n  \"links\": [\r\n    {\r\n      \"src\": {\r\n        \"node\": \"68270133-1cd3-4176-8197-3fd3c4c5c111\",\r\n        \"port\": \"out1\"\r\n      },\r\n      \"tar\": {\r\n        \"node\": \"cf42bd23-bdf1-433f-b72e-ee708aad7247\",\r\n        \"port\": \"in1\"\r\n      }\r\n    }\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{workflow-backend-ip}}:{{workflow-backend-port}}/api/v1/engines/{{engine_id}}",
+									"protocol": "http",
+									"host": [
+										"{{workflow-backend-ip}}"
+									],
+									"port": "{{workflow-backend-port}}",
+									"path": [
+										"api",
+										"v1",
+										"engines",
+										"{{engine_id}}"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\r\n    \"engine\": \"errored\",\r\n    \"nodes\": {\r\n        \"68270133-1cd3-4176-8197-3fd3c4c5c111\": \"finished\",\r\n        \"cf42bd23-bdf1-433f-b72e-ee708aad7247\": \"errored\"\r\n    },\r\n    \"errored\": [ // if not errored not included\r\n        \"random value lose than 0.3\"\r\n    ]\r\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "File",
+			"item": [
+				{
+					"name": "add",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('add file', () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.globals.set(\"file_id\", pm.response.json().id)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "projectId",
+									"value": "testProjectId",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "workflowId",
+									"value": "testWorkflowId",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/USER/Documents/카카오톡 받은 파일/DASH.hwp"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://{{workflow-backend-ip}}:{{workflow-backend-port}}/api/v1/files",
+							"protocol": "http",
+							"host": [
+								"{{workflow-backend-ip}}"
+							],
+							"port": "{{workflow-backend-port}}",
+							"path": [
+								"api",
+								"v1",
+								"files"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "run",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"workflowId\": \"workflow-id-test-1\",\r\n  \"nodes\": [\r\n    {\r\n      \"id\": \"68270133-1cd3-4176-8197-3fd3c4c5c111\"\r\n    },\r\n    {\r\n      \"id\": \"cf42bd23-bdf1-433f-b72e-ee708aad7247\"\r\n    }\r\n  ],\r\n  \"links\": [\r\n    {\r\n      \"src\": {\r\n        \"node\": \"68270133-1cd3-4176-8197-3fd3c4c5c111\",\r\n        \"port\": \"out1\"\r\n      },\r\n      \"tar\": {\r\n        \"node\": \"cf42bd23-bdf1-433f-b72e-ee708aad7247\",\r\n        \"port\": \"in1\"\r\n      }\r\n    }\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{workflow-backend-ip}}:{{workflow-backend-port}}/api/v1/engines",
+									"protocol": "http",
+									"host": [
+										"{{workflow-backend-ip}}"
+									],
+									"port": "{{workflow-backend-port}}",
+									"path": [
+										"api",
+										"v1",
+										"engines"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "get",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('add file', () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.globals.set(\"file_id\", pm.response.json().id)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://{{workflow-backend-ip}}:{{workflow-backend-port}}/api/v1/files/{{file_id}}",
+							"protocol": "http",
+							"host": [
+								"{{workflow-backend-ip}}"
+							],
+							"port": "{{workflow-backend-port}}",
+							"path": [
+								"api",
+								"v1",
+								"files",
+								"{{file_id}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "run",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"workflowId\": \"workflow-id-test-1\",\r\n  \"nodes\": [\r\n    {\r\n      \"id\": \"68270133-1cd3-4176-8197-3fd3c4c5c111\"\r\n    },\r\n    {\r\n      \"id\": \"cf42bd23-bdf1-433f-b72e-ee708aad7247\"\r\n    }\r\n  ],\r\n  \"links\": [\r\n    {\r\n      \"src\": {\r\n        \"node\": \"68270133-1cd3-4176-8197-3fd3c4c5c111\",\r\n        \"port\": \"out1\"\r\n      },\r\n      \"tar\": {\r\n        \"node\": \"cf42bd23-bdf1-433f-b72e-ee708aad7247\",\r\n        \"port\": \"in1\"\r\n      }\r\n    }\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{workflow-backend-ip}}:{{workflow-backend-port}}/api/v1/engines",
+									"protocol": "http",
+									"host": [
+										"{{workflow-backend-ip}}"
+									],
+									"port": "{{workflow-backend-port}}",
+									"path": [
+										"api",
+										"v1",
+										"engines"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('add file', () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.globals.set(\"file_id\", pm.response.json().id)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://{{workflow-backend-ip}}:{{workflow-backend-port}}/api/v1/files/{{file_id}}",
+							"protocol": "http",
+							"host": [
+								"{{workflow-backend-ip}}"
+							],
+							"port": "{{workflow-backend-port}}",
+							"path": [
+								"api",
+								"v1",
+								"files",
+								"{{file_id}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "run",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"workflowId\": \"workflow-id-test-1\",\r\n  \"nodes\": [\r\n    {\r\n      \"id\": \"68270133-1cd3-4176-8197-3fd3c4c5c111\"\r\n    },\r\n    {\r\n      \"id\": \"cf42bd23-bdf1-433f-b72e-ee708aad7247\"\r\n    }\r\n  ],\r\n  \"links\": [\r\n    {\r\n      \"src\": {\r\n        \"node\": \"68270133-1cd3-4176-8197-3fd3c4c5c111\",\r\n        \"port\": \"out1\"\r\n      },\r\n      \"tar\": {\r\n        \"node\": \"cf42bd23-bdf1-433f-b72e-ee708aad7247\",\r\n        \"port\": \"in1\"\r\n      }\r\n    }\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{workflow-backend-ip}}:{{workflow-backend-port}}/api/v1/engines",
+									"protocol": "http",
+									"host": [
+										"{{workflow-backend-ip}}"
+									],
+									"port": "{{workflow-backend-port}}",
+									"path": [
+										"api",
+										"v1",
+										"engines"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "getList",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('add file', () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.globals.set(\"file_id\", pm.response.json().id)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://{{workflow-backend-ip}}:{{workflow-backend-port}}/api/v1/files",
+							"protocol": "http",
+							"host": [
+								"{{workflow-backend-ip}}"
+							],
+							"port": "{{workflow-backend-port}}",
+							"path": [
+								"api",
+								"v1",
+								"files"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "run",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"workflowId\": \"workflow-id-test-1\",\r\n  \"nodes\": [\r\n    {\r\n      \"id\": \"68270133-1cd3-4176-8197-3fd3c4c5c111\"\r\n    },\r\n    {\r\n      \"id\": \"cf42bd23-bdf1-433f-b72e-ee708aad7247\"\r\n    }\r\n  ],\r\n  \"links\": [\r\n    {\r\n      \"src\": {\r\n        \"node\": \"68270133-1cd3-4176-8197-3fd3c4c5c111\",\r\n        \"port\": \"out1\"\r\n      },\r\n      \"tar\": {\r\n        \"node\": \"cf42bd23-bdf1-433f-b72e-ee708aad7247\",\r\n        \"port\": \"in1\"\r\n      }\r\n    }\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{workflow-backend-ip}}:{{workflow-backend-port}}/api/v1/engines",
+									"protocol": "http",
+									"host": [
+										"{{workflow-backend-ip}}"
+									],
+									"port": "{{workflow-backend-port}}",
+									"path": [
+										"api",
+										"v1",
+										"engines"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				}
+			]
+		}
+	]
+}

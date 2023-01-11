@@ -1,5 +1,3 @@
-import { logger } from '../../module/index.js'
-
 import * as status from './status.js'
 import { ChildProcess } from './child-process.js'
 
@@ -19,9 +17,6 @@ export function Node ({ id, projectId, workflowId, algorithmId, inPorts, outPort
       const algorithm = await cursor.algorithm.get(algorithmId)
 
       // [TODO] spawn algorithm and rebuild spec to run algorithm
-      // const spec = processSpec({ id, algorithm, inPorts, outPorts, parameters })
-      // for test
-      // const spec = processTestSpec({ id, projectId, workflowId, algorithm, inPorts, outPorts, parameters }, inPortMap)
       const spec = processSpec({ id, projectId, workflowId, algorithm, inPorts, outPorts, parameters }, inPortMap)
 
       try {

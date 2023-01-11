@@ -7,8 +7,6 @@ export function ChildProcess (algorithm, spec) {
     run: () => new Promise((resolve, reject) => {
       let err = null
       try {
-        // childProcess = spawnPython(spec)
-        // for test
         if (algorithm?.type === 'python') {
           childProcess = spawnPython(algorithm, spec)
         } else {
