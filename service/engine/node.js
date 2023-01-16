@@ -1,7 +1,7 @@
 import * as status from './status.js'
 import { ChildProcess } from './child-process.js'
 
-export function Node ({ id, projectId, workflowId, algorithmId, inPorts, outPorts, parameters }) {
+export function Node ({ id, projectId, workflowId, algorithmId, inPorts, outPorts, params }) {
   let nodeStatus = status.READY
   let childProcess = null
   const preNodes = new Set()
@@ -17,7 +17,7 @@ export function Node ({ id, projectId, workflowId, algorithmId, inPorts, outPort
       const algorithm = await cursor.algorithm.get(algorithmId)
 
       // [TODO] spawn algorithm and rebuild spec to run algorithm
-      const spec = processSpec({ id, projectId, workflowId, algorithm, inPorts, outPorts, parameters }, inPortMap)
+      const spec = processSpec({ id, projectId, workflowId, algorithm, inPorts, outPorts, params }, inPortMap)
 
       try {
         childProcess = ChildProcess(algorithm, spec)
@@ -59,7 +59,7 @@ export function VirtualNode (id) {
   }
 }
 
-function processSpec ({ id, projectId, workflowId, inPorts, outPorts, parameters }, inPortMap) {
+function processSpec ({ id, projectId, workflowId, inPorts, outPorts, params }, inPortMap) {
   const spec = {
     id,
     env: {
@@ -72,7 +72,7 @@ function processSpec ({ id, projectId, workflowId, inPorts, outPorts, parameters
       return `${node}.${port}`
     }),
     outputs: outPorts,
-    params: parameters.reduce((bucket, { key, value }) => {
+    params: params.reduce((bucket, { key, value }) => {
       bucket[key] = value
       return bucket
     }, {})
