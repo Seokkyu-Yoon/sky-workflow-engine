@@ -31,6 +31,12 @@ export function Controller (make, service) {
       const { id } = req.params
       const result = await service.delete(id)
       res.send(result)
+    }),
+    getOutput: make(async (req, res) => {
+      const { id, nodeId, portId } = req.params
+      const { start = 0, limit = 10 } = req.query
+      const result = await service.getOutput(id, nodeId, portId, start, limit)
+      res.send(result)
     })
   }
 }
