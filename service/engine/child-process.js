@@ -1,16 +1,14 @@
-import { resolve } from 'node:path'
 import { spawn } from 'node:child_process'
+
+import { getTypeInfo } from './type.js'
+import { service as storageService } from '../storage.js'
 
 export function ChildProcess (algorithm, spec) {
   let childProcess = null
   return {
     run: () => new Promise((resolve, reject) => {
       let err = null
-      if (algorithm?.type === 'python') {
-        childProcess = spawnPython(algorithm, spec)
-      } else {
-        childProcess = spawnDummy(algorithm, spec)
-      }
+      childProcess = createChildProcess(algorithm)
       childProcess.on('error', err => reject(err))
       childProcess.on('exit', code => {
         if (code !== 0) {
@@ -34,9 +32,11 @@ export function ChildProcess (algorithm, spec) {
     }
   }
 }
-function spawnPython (algorithm, spec) {
-  return spawn(process.env.PYTHON, [resolve(process.env.WORKFLOW_STORAGE, 'public', 'algorithm', `${algorithm.id}.py`)])
-}
-function spawnDummy (algorithm, spec) {
-  return spawn('node', [resolve(process.env.WORKFLOW_STORAGE, 'public', 'algorithm', 'dummy.js')])
+
+function createChildProcess (algorithm) {
+  const type = algorithm?.type || null
+  const { runCmd, extension } = getTypeInfo(type)
+
+  const algorithmFilepath = storageService.getAlgorithmFilepath({ ...algorithm, extension })
+  return spawn(runCmd, [algorithmFilepath])
 }

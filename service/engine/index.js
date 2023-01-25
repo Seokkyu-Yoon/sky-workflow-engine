@@ -1,28 +1,37 @@
-import { logger } from '../../module/index.js'
-
+import { RunnerDispenser } from './runner.js'
+import { service as storageService } from '../storage.js'
 import { Engine, Workflow } from '../../model/index.js'
-import { Runner } from './runner.js'
 
-export function Service (dataAccess) {
+export function Service (database) {
   const workflowEngineMap = new Map()
   const engineMap = new Map()
 
   const checkRunnable = EngineRunnableChecker(workflowEngineMap, engineMap)
   const createEngine = EngineDispenser(workflowEngineMap, engineMap)
+  const createRunner = RunnerDispenser(storageService, database)
 
+  function run (engine) {
+    engine.runner = createRunner(engine)
+    engine.runner.run()
+  }
+  function stop (engine) {
+    if (engine.runner === null) throw new Error('engine does not run anytime')
+    if (!engine.runner.isRunning()) throw new Error('engine is not running now')
+    return engine.runner.stop()
+  }
   return {
     run: async spec => {
       checkRunnable(spec)
-      const cursor = await dataAccess.connect()
-      const workflowInfo = await cursor.workflow.get(spec.workflowId)
+      const dbConnection = await database.connect()
+      const workflowInfo = await dbConnection.workflow.get(spec.workflowId)
       const workflow = Workflow(workflowInfo)
       const engine = createEngine({ ...spec, projectId: workflow.projectId })
-      runEngine(dataAccess, engine)
+      run(engine)
       return engine.id
     },
     stop: async engineId => {
       const engine = engineMap.get(engineId) || null
-      await stopEngine(engine)
+      await stop(engine)
       return engine.runner.status(true)
     },
     status: engineId => {
@@ -58,13 +67,4 @@ function EngineDispenser (workflowEngineMap, engineMap) {
     engineMap.set(id, engine)
     return engine
   }
-}
-function runEngine (dataAccess, engine) {
-  engine.runner = Runner(dataAccess, engine)
-  engine.runner.run()
-}
-function stopEngine (engine) {
-  if (engine.runner === null) throw new Error('engine does not run anytime')
-  if (!engine.runner.isRunning()) throw new Error('engine is not running now')
-  return engine.runner.stop()
 }
