@@ -1,14 +1,5 @@
-import { rm } from 'node:fs'
-import { resolve } from 'node:path'
-
 import { service as storageService } from './storage.js'
 import { Project } from '../model/index.js'
-
-function getDirPath ({ id: projectId = null }) {
-  const storagePath = process.env.WORKFLOW_STORAGE || './workflow-storage'
-  if (projectId === null) throw new Error('projectId is not found')
-  return resolve(storagePath, projectId)
-}
 
 export function Service (database) {
   return {

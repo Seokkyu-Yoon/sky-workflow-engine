@@ -2,9 +2,9 @@ import { createReadStream, createWriteStream, mkdir, rm, unlink } from 'node:fs'
 import { createInterface } from 'node:readline'
 import { resolve } from 'node:path'
 
-const rootDirpath = process.env.WORKFLOW_STORAGE
+const storagePath = process.env.WORKFLOW_STORAGE
 export const service = {
-  path: rootDirpath,
+  path: storagePath,
   mkDir: dirpath => new Promise((resolve, reject) => {
     mkdir(dirpath, { recursive: true }, err => err ? reject(err) : resolve())
   }),

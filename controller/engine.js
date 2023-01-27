@@ -11,7 +11,7 @@ export function Controller (make, service) {
     }),
     status: make((req, res) => {
       const { id } = req.params
-      const result = service.status(id)
+      const result = service.getStatus(id)
       res.send(result)
     }),
     get: make((req, res) => {
